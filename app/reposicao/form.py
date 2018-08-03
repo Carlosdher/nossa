@@ -1,7 +1,18 @@
+
+from __future__ import unicode_literals
+
 from django import forms
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
+
 from .models import Solicitacao
 
 class SolicitacaoForm(forms.ModelForm):
+    def save(self, commit=True):
+        solicitacao = super(SolicitacaoForm, self).save(commit=False)
+        if commit:
+            solicitacao.save()
+        return solicitacao
+
 
     class Meta:
         model = Solicitacao

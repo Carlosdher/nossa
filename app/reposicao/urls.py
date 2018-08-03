@@ -6,13 +6,17 @@ from django.conf.urls import include, url
 from . import views as auth_views
 
 
+
 app_name = 'reposicao'
 
 urlpatterns = [
+
+    #Home
      path('reposicao/', auth_views.Home.as_view(template_name='core/reposicao/home.html'), name='reposicao'),
-    # Login
-    # https://docs.djangoproject.com/en/2.0/topics/auth/default/#django.contrib.auth.views.LoginView
-    #path('', .Home.as_view()(template_name='templates/home.html'), name='home'),
+
+
+     #formulario de Reposição
+     path('reposicao/formrep/', auth_views.Reposicao.as_view(template_name='core/reposicao/formreposicao.html'), name='formrep'),
 
 
 ]

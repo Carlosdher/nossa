@@ -6,6 +6,9 @@ from django.db import models
 class Motivo(models.Model):
     name = models.CharField(max_length=100, verbose_name='Nome')
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name='Motivo'
         verbose_name_plural='Motivos'
@@ -13,6 +16,9 @@ class Motivo(models.Model):
 class Turma(models.Model):
     nome = models.CharField('nome',max_length=100)
     period = models.IntegerField(verbose_name='Período')
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = 'Turma'
@@ -28,6 +34,8 @@ class Solicitacao(models.Model):
     reason = models.ForeignKey(Motivo, on_delete = models.CASCADE)
     othes = models.CharField(max_length=200, null=True, blank=True, verbose_name='Outros' )
     team = models.ForeignKey(Turma, on_delete = models.CASCADE)
+
+
 
     class Meta:
         verbose_name = 'Solicitação'

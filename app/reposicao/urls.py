@@ -16,7 +16,7 @@ urlpatterns = [
 
 
      #formulario de Reposição
-     path('reposicao/formrep/', auth_views.Reposicao.as_view(template_name='core/reposicao/formreposicao.html'), name='formrep'),
+     path('reposicao/formrep/', auth_views.Reposicao, name='formrep'),
 
 
 ]

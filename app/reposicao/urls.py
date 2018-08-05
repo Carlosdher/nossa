@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 
 from django.urls import include, path
 from django.conf.urls import include, url
-from . import views as auth_views
+
+from . import views as core
+
 
 
 
@@ -12,11 +14,11 @@ app_name = 'reposicao'
 urlpatterns = [
 
     #Home
-     path('reposicao/', auth_views.Home.as_view(template_name='core/reposicao/home.html'), name='reposicao'),
+     path('reposicao/', core.Home.as_view(template_name='core/reposicao/home.html'), name='reposicao'),
 
 
      #formulario de Reposição
-     path('reposicao/formrep/', auth_views.Reposicao, name='formrep'),
+     path('reposicao/formrep/', core.Reposicao.as_view(), name='formrep'),
 
 
 ]

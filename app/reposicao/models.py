@@ -17,9 +17,6 @@ class Turma(models.Model):
     nome = models.CharField('nome',max_length=100)
     period = models.IntegerField(verbose_name='Período')
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Turma'
         verbose_name_plural = 'Turmas'

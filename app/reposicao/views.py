@@ -4,22 +4,19 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
-
 from django.urls import reverse_lazy
+from . import models
 
-from .models import Solicitacao
-from .form import SolicitacaoForm
-
-from django.shortcuts import render
 
 class Home(TemplateView):
     template_name = 'home.html'
 
-def Reposicao(request):
-    model = Solicitacao
-    form_class = SolicitacaoForm()
+class Reposicao(CreateView):
+    model = models.Solicitacao
     template_name = 'core/reposicao/formreposicao.html'
-    return render(request,template_name, {'form': form_class})
+    success_url = reverse_lazy('reposicao:reposicao')
+    fields = ['justification','date_miss_start','date_miss_end','reason','othes','team']
+
 
 #def historico(request):
 #    template_name = 'core/reposicao/historico.html'

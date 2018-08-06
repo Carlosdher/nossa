@@ -15,7 +15,6 @@ urlpatterns = [
 
     #Home
      path('reposicao/', core.Home.as_view(template_name='core/reposicao/home.html'), name='reposicao'),
-     path('perfil/<pk>/', core.Perfil.as_view(template_name='core/reposicao/perfil.html'), name='perfil'),
 
 
      #formulario de Reposição

@@ -14,8 +14,13 @@ class Motivo(models.Model):
         verbose_name_plural='Motivos'
 
 class Turma(models.Model):
-    nome = models.CharField('nome',max_length=100)
+    name = models.CharField('nome',max_length=100)
     period = models.IntegerField(verbose_name='Período')
+
+
+    def __str__(self):
+        return '%s-%i'%(self.name, self.period)
+
 
     class Meta:
         verbose_name = 'Turma'

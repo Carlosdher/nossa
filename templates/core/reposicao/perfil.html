@@ -1,0 +1,10 @@
+{% extends '../base.html'%}
+{% load static %}
+{% block content %}
+<img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+  <p>5 new members joined today</p>
+  {% csrf_token %}
+      {{ form.as_p }}
+
+
+{% endblock %}

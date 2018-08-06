@@ -8,14 +8,24 @@ from django.urls import reverse_lazy
 from . import models
 
 
+
 class Home(TemplateView):
     template_name = 'home.html'
+
+class Perfil(UpdateView):
+    model = models.Solicitacao
+    template_name = 'perfil.html'
+    success_url = reverse_lazy('reposicao:reposicao')
+    fields = ['date_miss_start','date_miss_end', 'justification', 'reason','othes','team']
+
+
 
 class Reposicao(CreateView):
     model = models.Solicitacao
     template_name = 'core/reposicao/formreposicao.html'
     success_url = reverse_lazy('reposicao:reposicao')
-    fields = ['justification','date_miss_start','date_miss_end','reason','othes','team']
+    fields = ['date_miss_start','date_miss_end', 'justification', 'reason','othes','team']
+
 
 
 #def historico(request):

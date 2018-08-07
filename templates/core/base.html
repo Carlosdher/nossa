@@ -133,9 +133,21 @@
         </li>
         {% endif %}
         <li>
-          <a href="{% url 'reposicao:reposicao' %}">
-            <i class="fa fa-print"></i> <span>Reposicao de aula</span>
+          <li class="treeview">
+          <!-- <a href="{% url 'reposicao:reposicao' %}"> -->
+            <a href="#">
+            <i class="fa fa-calendar-times-o "></i> <span>Sistema de Reposição</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="{% url 'reposicao:formrep' %}"><i class="fa fa-circle-o"></i> Reposição de Aula</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Adiantamento de Aula</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Troca de Aula</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Historico</a></li>
+          </ul>
+          <!-- </a> -->
         </li>
       </ul>
     </section>

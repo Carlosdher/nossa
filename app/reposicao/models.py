@@ -28,8 +28,8 @@ class Turma(models.Model):
 
 
 
-class Solicitacao(models.Model):
-    user = models.ForeignKey(UUIDUser, on_delete=models.CASCADE)
+class Solicitacao(CreateUpdateModel):
+    #user = models.ForeignKey(UUIDUser, on_delete=models.CASCADE)
     justification = models.TextField(verbose_name='Justificativa')
     date_miss_start = models.DateField(verbose_name='Data da Falta Inicial')
     date_miss_end = models.DateField(verbose_name='Data da Falta Final')
@@ -39,7 +39,7 @@ class Solicitacao(models.Model):
 
 
     def __str__(self):
-        return "%s" %(self.user)
+        return "%s" %(self.id)
 
 
     class Meta:

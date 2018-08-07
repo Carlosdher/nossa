@@ -20,5 +20,7 @@ urlpatterns = [
      #formulario de Reposição
      path('reposicao/formrep/', core.Reposicao.as_view(), name='formrep'),
 
+     path('reposicao/aceitar/', core.Aceitar.as_view(), name='aceitar')
+
 
 ]

@@ -6,12 +6,12 @@ from . import models
 connection = mail.get_connection()
 connection.open()
 
-def create_user_profile(sender, instance, created, **kwargs):
+def create_Solicitation(sender, instance, created, **kwargs):
 
     if created:
         email = mail.EmailMessage(
             'Hello',
-            'Body goes here',
+            '127.0.0.1:8000/dashboard/aceitar',
             'carlosabc436@gmail.com',
             ['megatronstall@gmail.com'],
             connection=connection,
@@ -19,4 +19,8 @@ def create_user_profile(sender, instance, created, **kwargs):
         email.send()
         connection.close()
 
-post_save.connect(create_user_profile, sender=models.Motivo)
+post_save.connect(create_Solicitation, sender=models.Solicitacao)
+
+# def acept_Solicitation(sender, instance, created, **kwargs):
+#
+# post_save.connect(acept_Solicitation, sender=submit)

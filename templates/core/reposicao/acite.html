@@ -1,0 +1,39 @@
+{% extends '../base.html' %}
+
+{% block content %}
+
+      <h2>Requerimento de Reposicao</h2>
+
+      <p>Professor: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+
+      <p>Turma/Periodo: {{object.team}}</p>
+
+      <p>Período da falta: {{object.date_miss_start}} á {{object.date_miss_end}}</p>
+
+      <p>Motivo: {{object.reason}}
+
+      <p>Justificativa: {{object.justification}}</p>
+
+
+    {% endfor %}
+    <form method="post" action="aceitar">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#negarModal" style="margin: 0px 0px;">
+        <spam style="color: #FFF;">Negar <spam>
+      </button>
+      <div class="modal fade" id="negarModal" tabindex="-1" role="dialog" aria-labelledby="negarModalLabel">
+          <div class="modal-dialog" role="document">
+              <div class="modal-header">
+              </div>
+              <div class="modal-body">
+                <h2 style="color: #FFF;"><strong>Justificativa da recusa</strong></h2>
+                  <textarea class="form-control" rows="7"></textarea>
+                  <button type="button" class="btn btn-primary" >
+                    <spam style="color: #FFF;">Enviar<spam>
+                  </button>
+              </div>
+            </div>
+          </div>
+      <input type="submit" value="Aceitar" />
+    </form>
+
+{% endblock %}

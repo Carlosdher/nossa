@@ -1,5 +1,5 @@
 from django.db import models
-#from app.core.models import CreateUpdateModel
+from app.core.models import CreateUpdateModel, UUIDUser
 
 
 
@@ -29,7 +29,7 @@ class Turma(models.Model):
 
 
 class Solicitacao(models.Model):
-    #user = models.ForeignKey(UUIDUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(UUIDUser, on_delete=models.CASCADE)
     justification = models.TextField(verbose_name='Justificativa')
     date_miss_start = models.DateField(verbose_name='Data da Falta Inicial')
     date_miss_end = models.DateField(verbose_name='Data da Falta Final')
@@ -37,6 +37,9 @@ class Solicitacao(models.Model):
     othes = models.CharField(max_length=200, null=True, blank=True, verbose_name='Outros' )
     team = models.ForeignKey(Turma, on_delete = models.CASCADE)
 
+
+    def __str__(self):
+        return "%s" %(self.user)
 
 
     class Meta:

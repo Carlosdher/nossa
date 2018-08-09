@@ -8,6 +8,8 @@
 </ol>
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
+    <input type="hidden" name="usuario" id="usuario" value="{{ request.user.Username }}">]
+    <input type="hidden" name="matricula" id="matricula" value="{{ request.user.id }}">
     <a href="{% url 'reposicao:reposicao' %}" class="btn btn-default">Close</a>
     <input type="submit" value="Save" />
 </form>

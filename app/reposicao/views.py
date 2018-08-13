@@ -19,25 +19,47 @@ class Reposicao(CreateView):
     success_url = reverse_lazy('reposicao:reposicao')
     fields = ['date_miss_start','date_miss_end', 'justification', 'reason','othes','team']
 
+    def form_valid(self, form):
+         obj = form.save(commit=False)
+         obj.user = self.request.user
+         obj.save()
+         return super(Reposicao, self).form_valid(form)
 
-class Aceitar(ListView):
-    model = models.Solicitacao
+class AceitarCreateView(CreateView):
+    model = models.Autorizacao
+    template_name = 'core/reposicao/aceitar.html'
+    success_url = reverse_lazy('reposicao:reposicao')
+    fields = ['status']
+
+    def form_valid(self, form):
+         obj = form.save(commit=False)
+         obj.user = self.request.user
+         obj.save()
+         return super(AceitarCreateView, self).form_valid(form)
+
+
+
+class Aceitar(DetailView):
+    model = models.Autorizacao
     template_name = 'core/reposicao/acite.html'
+    def get_queryset(self):
+        return models.Solicitacao.objects.all()
+
+
 
 class Historico(ListView):
     model = models.Solicitacao
     template_name = 'core/reposicao/historico.html'
 
+    def get_context_data(self, **kwargs):
+        kwargs['datas'] = models.Planejamento.objects.all()
+        return super(Historico, self).get_context_data(**kwargs)
 
-     # def get_context_data(self, **kwargs):
-     #    kwargs['dados'] = models.So.objects.all()
-     #
-     #    return super(BooksView, self).get_context_data(**kwargs)
-     #
-     # def get_queryset(self):
-     #     if 'category' in self.request.GET:
-     #         return models.Book.objects.filter(category=self.request.GET['category'])
-     #     return models.Book.objects.all()
+
+    def get_queryset(self):
+          if 'solicitation' in self.request.GET:
+              return models.Planejamento.objects.filter(solicitation=self.request.GET['solicitation'])
+          return models.Planejamento.objects.all()
 
 
 

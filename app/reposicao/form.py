@@ -4,9 +4,10 @@ from __future__ import unicode_literals
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import Solicitacao
+from .models import Solicitacao, Autorizacao
 
 class SolicitacaoForm(forms.ModelForm):
+    user = forms.CharField(widgets=forms.HiddenField())
     def save(self, commit=True):
         solicitacao = super(SolicitacaoForm, self).save(commit=False)
         if commit:
@@ -43,3 +44,17 @@ class SolicitacaoForm(forms.ModelForm):
         'othes': forms.TextInput(),
         'team': forms.Select(),
         }
+
+class AutorizacaoForm(forms.ModelForm):
+    def save(self, commit=True):
+        Autorizacao = super(AutorizacaoForm, self).save(commit=False)
+        if commit:
+            Autorizacao.save()
+        return Autorizacao
+
+    status = forms.IntegerField(widgets=forms.HiddenField(), initial=1)
+    justification_Aceit = forms.TextField(widgets=forms.TextField())
+    class Meta:
+        model = Autorizacao
+
+        fields = ['status', 'justification_Aceit']

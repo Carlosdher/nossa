@@ -11,34 +11,31 @@ connection.open()
 def create_Solicitation(sender, instance, created, **kwargs):
 
     if created:
+        pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %instance.pk
         email = mail.EmailMessage(
             'Hello',
-            '127.0.0.1:8000/reposicao/aceitar',
+            pk,
             'carlosabc436@gmail.com',
             ['megatronstall@gmail.com'],
-            connection=connection,
-        )
+            connection=connection,)
         email.send()
         connection.close()
 
-post_save.connect(create_Solicitation, sender=models.Motivo)
+post_save.connect(create_Solicitation, sender=models.Solicitacao)
 
-def aceite_Solicitation(sender, instance, created, **kwargs):
 
-    if created == False:
+
+def Autorizar(sender, instance, created, **kwargs):
+
+    if created:
+        pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %instance.pk
         email = mail.EmailMessage(
             'Hello',
-            '127.0.0.1:8000/reposicao/aceitar',
+            pk,
             'carlosabc436@gmail.com',
             ['megatronstall@gmail.com'],
-            connection=connection,
-        )
+            connection=connection,)
         email.send()
         connection.close()
 
-post_save.connect(aceite_Solicitation, sender=models.Motivo)
-
-
-# def acept_Solicitation(sender, instance, created, **kwargs):
-#
-# post_save.connect(acept_Solicitation, sender=submit)
+post_save.connect(create_Solicitation, sender=models.Solicitacao)

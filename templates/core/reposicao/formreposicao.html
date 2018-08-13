@@ -1,15 +1,15 @@
 {% extends '../base.html'%}
-
 {% block content %}
 <ol style="float: right;"class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Sistema de reposição</a></li>
         <li class="active">Reposição de Aula</li>
 </ol>
-<form method="post">{% csrf_token %}
+<form method="post">
+  {% csrf_token %}
     {{ form.as_p }}
-    <input type="hidden" name="usuario" id="usuario" value="{{ request.user.Username }}">]
-    <input type="hidden" name="matricula" id="matricula" value="{{ request.user.id }}">
+    <input type="hidden" name="usuario" value="{{ request.user.username }}">
+    <input type="hidden" name="matricula" value="{{ object.user.registration }}">
     <a href="{% url 'reposicao:reposicao' %}" class="btn btn-default">Close</a>
     <input type="submit" value="Save" />
 </form>

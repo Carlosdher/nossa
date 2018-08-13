@@ -1,41 +1,37 @@
 {% extends '../base.html' %}
 
 {% block content %}
-      {% for object in object_list %}
-      <h2>Requerimento de Reposicao</h2>
 
-      <p>Professor: {{ object.usuario }}</p>
+        <h2>Requerimento de Reposicao</h2>
 
-      <p>Matricula: {{ matricula }} </p>
+        <p>Professor: {{ object.user.username }}</p>
 
-      <p>Turma/Periodo: {{object.team}}</p>
+        <p>Matricula: {{ object.user.registration }} </p>
 
-      <p>Período da falta: {{object.date_miss_start}} á {{object.date_miss_end}}</p>
+        <p>Turma/Periodo: {{object.team}}</p>
 
-      <p>Motivo: {{object.reason}}
+        <p>Período da falta: {{object.date_miss_start}} à {{object.date_miss_end}}</p>
 
-      <p>Justificativa: {{object.justification}}</p>
-      {% endfor %}
+        {% if object.othes %}
 
-      <form action="aceitar" method="get">
+          <p>Motivo: {{object.othes}}</p>
 
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#negarModal" style="margin: 0px 0px;">
-        <spam style="color: #FFF;">Negar <spam>
-      </button>
-      <div class="modal fade" id="negarModal" tabindex="-1" role="dialog" aria-labelledby="negarModalLabel">
-          <div class="modal-dialog" role="document">
-              <div class="modal-header">
-              </div>
-              <div class="modal-body">
-                <h2 style="color: #FFF;"><strong>Justificativa da recusa</strong></h2>
-                  <textarea class="form-control" rows="7"></textarea>
-                  <button type="button" class="btn btn-primary" >
-                    <spam style="color: #FFF;">Enviar<spam>
-                  </button>
-              </div>
-            </div>
-          </div>
-          <input type="submit" name="aceitar" id="aceitar" value="aceitar" />
+        {% else %}
+          <p>Motivo: {{object.reason}}</p>
+
+        {% endif %}
+        <p>Justificativa: {{object.justification}}</p>
+        <form action="{% url 'reposicao:aceitar-create' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" id="status" name="status" value="2" />
+          <button type="submit">Aceitar</button>
         </form>
+
+
+
+
+
+
+
 
 {% endblock %}

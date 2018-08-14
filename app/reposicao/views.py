@@ -59,8 +59,16 @@ class Aceitar(DetailView):
 class Historico(ListView):
     model = models.Autorizacao
     template_name = 'core/reposicao/historico.html'
+
+
+    def get_context_data(self, **kwargs):
+        kwargs['Planejamento'] = models.Planejamento.objects.all()
+        kwargs['solicitacao'] = models.Solicitacao.objects.all()
+
+        return super(Historico, self).get_context_data(**kwargs)
+
     def get_queryset(self):
-        return models.Solicitacao.objects.all()
+        return models.Autorizacao.objects.all()
 
 
 

@@ -2,26 +2,55 @@
 
 {% block content %}
 <div class="wrapper">
-<div class="box-body table-responsive no-padding">
+  <div class="box-tools">
+      <div class="input-group input-group-sm" style="width: 150px;">
+          <input type="text" name="table_search" class="form-control pull-left" placeholder="Search">
+
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
+      </div>
+  </div>
+
+  <div class="box-body table-responsive no-padding">
     <table class="table table-hover">
             <tr>
               <th>Professor</th>
               <th>Matricula</th>
               <th>Periodo da Falta</th>
+              <th>Turma-Período</th>
+              <th>Data de Reposicao</th>
               <th>Status</th>
-              <th>Turma-1</th>
             </tr>
-            {% for object in object_list %}
+            {% for solicitation in solicitacao %}
             <tr>
-              <td>{{ object.user.username }}</td>
-              <td>{{ object.user.registration }}</td>
-              <td>{{object.date_miss_start}} - {{object.date_miss_end}}</td>
-              <td>{{ object.status }}</td>
-              <td>{{object.team}}</td>
-            </tr>
-            {% endfor %}
+            {% for object in object_list %}
+                <td>{{ solicitation.user.first_name }}{{solicitation.user.last_name}}</td>
+                <td>{{ solicitation.user.registration }}</td>
+                <td>{{solicitation.date_miss_start}} - {{solicitation.date_miss_end}}</td>
+                <td>{{solicitation.team}}</td>
+                {% endfor %}
+                {% if Planejamento %}
+                  {% for plannig in Planejamento %}
+                    <td>{{ plannig.date_restitutions }}</td>
+                  {% endfor %}
+                {% else %}
+                  <td>---------</td>
+                {% endif %}
+                {% if object.status == 1 %}
+                  <td class="label label-warning">Em Andamento</td>
+                  </tr>
+                {% elif object.status == 2 %}
+                    <td class="label label-success">Aprovada</td>
+                    </tr>
+                {% else %}
+                  <td class="label label-danger">Negada</td>
+                  </tr>
+                {% endif %}
+
+              {% endfor %}
         </table>
 
-</div>
+      </div>
 </div>
 {% endblock %}

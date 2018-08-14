@@ -57,4 +57,4 @@ class AutorizacaoForm(forms.ModelForm):
     class Meta:
         model = Autorizacao
 
-        fields = ['status', 'justification_Aceit']
+        fields = ('status', 'justification_Aceit')

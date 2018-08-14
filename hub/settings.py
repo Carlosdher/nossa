@@ -47,13 +47,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #css
+    'widget_tweaks',
+
     # third party apps
     'imagekit',
 
     # hub
     'app.core',
 
-    # ctrl_p
+    # reposicao
     'app.reposicao',
 ]
 

@@ -8,7 +8,7 @@
 <form method="post">
   {% csrf_token %}
     {{ form.as_p }}
-    <input type="hidden" name="usuario" value="{{ request.user.username }}">
+    <input type="hidden" name="usuario" value="{{ request.user.first_name }}{{ request.user.lest_name }}">
     <input type="hidden" name="matricula" value="{{ object.user.registration }}">
     <a href="{% url 'reposicao:reposicao' %}" class="btn btn-default">Close</a>
     <input type="submit" value="Save" />

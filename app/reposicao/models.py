@@ -47,19 +47,18 @@ class Solicitacao(CreateUpdateModel):
         verbose_name = 'Solicitação'
         verbose_name_plural = 'Solicitações'
 
-class Autorizacao(models.Model):
+class Autorizacao(CreateUpdateModel):
 
     STATUS = (
     (0, 'Negada'),
     (1, 'Andamento'),
     (2, 'Aceita')
             )
-    #solicitation = models.ForeignKey(Solicitacao, on_delete=models.CASCADE, related_name='Autorizacoes')
     justification_Aceit = models.TextField(null=True, blank=True, verbose_name='Justificativa')
     status = models.IntegerField(choices=STATUS)
 
     def __str__(self):
-        return "%s" %(self.status)
+        return '%i' %(self.status)
 
 class Planejamento(models.Model):
     components = models.CharField(primary_key=True,  max_length=100, verbose_name='Componente Curricular')

@@ -8,21 +8,20 @@
               <th>Professor</th>
               <th>Matricula</th>
               <th>Periodo da Falta</th>
-              <th>Data da Reposicao</th>
+              <th>Status</th>
               <th>Turma-1</th>
-              <th>Status do Requerimento</th>
             </tr>
             {% for object in object_list %}
             <tr>
               <td>{{ object.user.username }}</td>
               <td>{{ object.user.registration }}</td>
               <td>{{object.date_miss_start}} - {{object.date_miss_end}}</td>
-              <td>{{asd}}</td>
+              <td>{{ object.status }}</td>
               <td>{{object.team}}</td>
-              <td>em andamento ..</dt>
             </tr>
             {% endfor %}
-          </table>
+        </table>
+
 </div>
 </div>
 {% endblock %}

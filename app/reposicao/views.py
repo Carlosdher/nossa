@@ -29,32 +29,27 @@ class AceitarCreateView(CreateView):
     model = models.Autorizacao
     template_name = 'core/reposicao/aceitar.html'
     success_url = reverse_lazy('reposicao:reposicao')
-    fields = ['status','solicitation']
+    fields = ['status', 'solicitation']
 
-    def form_valid(self, form):
-         obj = form.save(commit=False)
-         obj.user = self.request.user
-         obj.save()
-         return super(AceitarCreateView, self).form_valid(form)
 
 class NegarCreateView(CreateView):
     model = models.Autorizacao
     template_name = 'core/reposicao/negar.html'
     success_url = reverse_lazy('reposicao:reposicao')
-    fields = ['status','justification_Aceit']
+    fields = ['status','justification_Aceit', 'solicitation']
 
-    def form_valid(self, form):
-         obj = form.save(commit=False)
-         obj.user = self.request.user
-         obj.save()
-         return super(NegarCreateView, self).form_valid(form)
 
 class Aceitar(DetailView):
     model = models.Autorizacao
     template_name = 'core/reposicao/acite.html'
+    fields = [ 'status', 'justification_Aceit', 'solicitation']
+
+    def get_context_data(self, **kwargs):
+        kwargs['solicitacao'] = models.Solicitacao.objects.all()
+        return super(Aceitar, self).get_context_data(**kwargs)
+
     def get_queryset(self):
         return models.Solicitacao.objects.all()
-
 
 class Historico(ListView):
     model = models.Autorizacao

@@ -22,14 +22,14 @@
         {% endif %}
         <p>Justificativa: {{object.justification}}</p>
 
-
         <form action="{% url 'reposicao:aceitar-create' %}" method="POST">
-          {% csrf_token %}
-          <input type="hidden" id="status" name="status" value="2" />
-          <input type="hidden" name="solicitation" value="{{request.pk}}">
-          <button type="submit">Aceitar</button>
-        </form>
-        <a href="{% url 'reposicao:negar-create' %}" class="btn btn-default">Negar</a>
+            {% csrf_token %}
+            <input type="hidden" id="status" name="status" value="2" />
+            <input type="hidden" id="solicitation" name="solicitation" value="{{object}}" />
+            <button type="submit">Aceitar</button>
+          </form>
+          <a href="{% url 'reposicao:negar-create' %}" class="btn btn-default">Negar</a>
+        
 
 
 

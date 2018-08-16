@@ -36,7 +36,7 @@ def Autorizar(sender, instance, created, **kwargs):
             email = mail.EmailMessage(
                 'Solicitacao Negada',
                 pk,
-                'megatronstall@gmail.com',
+                'carlosabc436@gmail.com',
                 ['carlosabc436@gmail.com'],
                 connection=connection,)
             email.send()

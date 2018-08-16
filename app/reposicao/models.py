@@ -68,6 +68,9 @@ class Planejamento(models.Model):
     date_restitution = models.DateField(verbose_name='Data da Reposição')
     descripition  = models.TextField(verbose_name='Descrição')
 
+    def __str__(self):
+        return "%s" %(self.date_restitution)
+
     class Meta:
         verbose_name='Planejamento'
         verbose_name_plural = 'Planejamentos'

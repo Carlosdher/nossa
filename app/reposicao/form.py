@@ -46,11 +46,6 @@ class SolicitacaoForm(forms.ModelForm):
         }
 
 class AutorizacaoForm(forms.ModelForm):
-    def save(self, commit=True):
-        Autorizacao = super(AutorizacaoForm, self).save(commit=False)
-        if commit:
-            Autorizacao.save()
-        return Autorizacao
 
     status = forms.IntegerField(widgets=forms.HiddenField(), initial=1)
     justification_Aceit = forms.TextField(widgets=forms.TextField())

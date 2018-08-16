@@ -54,6 +54,7 @@ class Autorizacao(CreateUpdateModel):
     (1, 'Andamento'),
     (2, 'Aceita')
             )
+    solicitation = models.ForeignKey(Solicitacao, on_delete=models.CASCADE)
     justification_Aceit = models.TextField(null=True, blank=True, verbose_name='Justificativa')
     status = models.IntegerField(choices=STATUS)
 

@@ -29,7 +29,7 @@ class AceitarCreateView(CreateView):
     model = models.Autorizacao
     template_name = 'core/reposicao/aceitar.html'
     success_url = reverse_lazy('reposicao:reposicao')
-    fields = ['status']
+    fields = ['status','solicitation']
 
     def form_valid(self, form):
          obj = form.save(commit=False)

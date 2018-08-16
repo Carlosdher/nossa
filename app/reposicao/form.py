@@ -54,7 +54,8 @@ class AutorizacaoForm(forms.ModelForm):
 
     status = forms.IntegerField(widgets=forms.HiddenField(), initial=1)
     justification_Aceit = forms.TextField(widgets=forms.TextField())
+    solicitation = forms.ForeignKey(widgets=forms.HiddenField())
     class Meta:
         model = Autorizacao
 
-        fields = ('status', 'justification_Aceit')
+        fields = ('status', 'justification_Aceit', 'solicitation')

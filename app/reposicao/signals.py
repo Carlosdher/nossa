@@ -11,6 +11,7 @@ connection.open()
 def create_Solicitation(sender, instance, created, **kwargs):
 
     if created:
+        models.Autorizacao.objects.create(solicitation = instance, status = 1)
         pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %instance.pk
         email = mail.EmailMessage(
             'Hello',
@@ -20,6 +21,7 @@ def create_Solicitation(sender, instance, created, **kwargs):
             connection=connection,)
         email.send()
         connection.close()
+        models.Autorizacao.objects.create(solicitation = instance, status = 1)
 
 post_save.connect(create_Solicitation, sender=models.Solicitacao)
 
@@ -42,7 +44,7 @@ def Autorizar(sender, instance, created, **kwargs):
             email.send()
             connection.close()
 
-        else:
+        elif instance.status == 2:
             pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %instance.pk
             email = mail.EmailMessage(
                 'Hello',

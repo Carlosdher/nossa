@@ -50,6 +50,11 @@ class AutorizacaoForm(forms.ModelForm):
     status = forms.IntegerField(widgets=forms.HiddenField(), initial=1)
     justification_Aceit = forms.TextField(widgets=forms.TextField())
     solicitation = forms.ForeignKey(widgets=forms.HiddenField())
+    def save(self, commit=True):
+        autorizar = super(AutorizacaoForm, self).save(commit=False)
+        if commit:
+            autorizar.save()
+        return autorizar
     class Meta:
         model = Autorizacao
 

@@ -31,7 +31,11 @@
                 <td>{{solicitation.team}}</td>
                 {% if Planejamento %}
                   {% for plannig in Planejamento %}
+                    {% if plannig.solicitation == solicitation %}
                     <td>{{ plannig }}</td>
+                    {% else %}
+                      <td>---------</td>
+                    {% endif %}
                   {% endfor %}
                 {% else %}
                   <td>---------</td>

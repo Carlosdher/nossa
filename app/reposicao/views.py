@@ -31,9 +31,6 @@ class AceitarCreateView(UpdateView):
     success_url = reverse_lazy('reposicao:reposicao')
     fields = ['status', 'solicitation']
 
-    def get_queryset(self):
-        return models.Solicitacao.objects.all()
-
 
 class NegarCreateView(UpdateView):
     model = models.Autorizacao

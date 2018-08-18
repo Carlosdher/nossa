@@ -22,7 +22,6 @@
               <th>Data de Reposicao</th>
               <th>Status</th>
             </tr>
-            {% if object_list %}
             {% for solicitation in solicitacao %}
             <tr>
                 <td>{{ solicitation.user.first_name }}{{solicitation.user.last_name}}</td>
@@ -50,7 +49,7 @@
 
                           <td class="label label-success">Aprovada</td>
 
-                      {% else %}
+                      {% elif object.status == 0 %}
 
                         <td class="label label-danger">Negada</td>
 
@@ -59,24 +58,7 @@
                   {% endfor %}
                 </tr>
               {% endfor %}
-              {% else %}
-                {% for solicitation in solicitacao %}
-                  <tr>
-                      <td>{{ solicitation.user.first_name }}{{solicitation.user.last_name}}</td>
-                      <td>{{ solicitation.user.registration }}</td>
-                      <td>{{solicitation.date_miss_start}} - {{solicitation.date_miss_end}}</td>
-                      <td>{{solicitation.team}}</td>
-                      {% if Planejamento %}
-                        {% for plannig in Planejamento %}
-                          <td>{{ plannig.date_restitutions }}</td>
-                        {% endfor %}
-                      {% else %}
-                        <td>---------</td>
-                      {% endif %}
-                      <td class="label label-warning">Em Andamento</td>
-                    </tr>
-                  {% endfor %}
-              {% endif %}
+
         </table>
 
       </div>

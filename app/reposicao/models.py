@@ -57,7 +57,7 @@ class Autorizacao(CreateUpdateModel):
     status = models.IntegerField(choices=STATUS)
 
     def __str__(self):
-        return '%s' %(self.id)
+        return '%s' %(self.status)
 
 class Planejamento(CreateUpdateModel):
     solicitation = models.ForeignKey(Solicitacao, on_delete=models.CASCADE)

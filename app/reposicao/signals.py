@@ -30,11 +30,11 @@ post_save.connect(create_Solicitation, sender=models.Solicitacao)
 def Autorizar(sender, instance, created, **kwargs):
 
     if created:
-        pk = str('Caro discente sua Solicitacao de Reposicao foi negada pelos seguintes motivos:'
-         '\n \n \n %s'
-         '\n \n  Acesse o link para a alterações necessarias'
-         '\n 127.0.0.1:8000/reposicao/alterar/%s') %(instance.justification_Aceit, instance.pk)
         if instance.status == 0:
+            pk = str('Caro discente sua Solicitacao de Reposicao foi negada pelos seguintes motivos:'
+            '\n \n \n %s'
+            '\n \n  Acesse o link para a alterações necessarias'
+            '\n \n \n 127.0.0.1:8000/reposicao/alterar/%s') %(instance.justification_Aceit, instance.pk)
             email = mail.EmailMessage(
                 'Solicitacao Negada',
                 pk,

@@ -24,7 +24,7 @@ urlpatterns = [
 
      path('reposicao/aceitarform/<pk>', core.AceitarCreateView.as_view(), name='aceitar-create'),
 
-     path('reposicao/negarform/', core.NegarCreateView.as_view(), name='negar-create'),
+     path('reposicao/negarform/<pk>', core.NegarCreateView.as_view(), name='negar-create'),
 
 
      path('reposicao/historico/', core.Historico.as_view(), name='historico')

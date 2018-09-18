@@ -41,17 +41,17 @@
                 {% endif %}
                 {% for object in object_list %}
                     {% if object.solicitation == solicitation %}
-                      {% if object.status == 1 %}
 
-                        <td class="label label-warning">Em Andamento</td>
-
-                      {% elif object.status == 2 %}
+                      {% if object.status == 4 %}
 
                           <td class="label label-success">Aprovada</td>
 
                       {% elif object.status == 0 %}
 
                         <td class="label label-danger">Negada</td>
+                      {% else %}
+
+                        <td class="label label-warning">Em Andamento</td>
 
                       {% endif %}
                     {% endif %}

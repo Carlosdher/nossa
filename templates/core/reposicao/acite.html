@@ -24,13 +24,12 @@
 
         <form action="{% url 'reposicao:aceitar-create' object.pk %}" method="POST">
             {% csrf_token %}
-            <input type="hidden" id="status" name="status" value="2" />
-            <input type="hidden" id="solicitation" name="solicitation" value="{{solicitation}}" />
+            <input type="hidden" name="teste" value="{{object}}" /> 
+            <input type="hidden" name="aceita" value="aceita" />
             <button type="submit">Aceitar</button>
           </form>
           <form action="{% url 'reposicao:negar-create' object.pk %}">
             <input type="hidden" id="status" name="status" value="0">
-            <input type="hidden" id="solicitation" name="solicitation" value="{{solicitation}}" />
             <input type="submit" value="Negar" />
           </form>
 

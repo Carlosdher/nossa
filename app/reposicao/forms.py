@@ -20,14 +20,14 @@ class UUIDUserForm(forms.ModelForm):
 
     class Meta:
         model = UUIDUser
-        fields = ('username', 'first_name', 'email','password', 'is_company')
+        fields = ('username', 'first_name','last_name','cpf', 'email','password')
         labels = {
-            'username': 'Login',
-            'first_name': 'Nome completo',
+            'username': 'Usuário',
+            'first_name': 'Primeiro nome',
+            'last_name': 'Último nome',
+            'cpf': 'CPF',
             'email': 'Email',
         }
         widgets={
             'password':forms.PasswordInput()
         }
-
-

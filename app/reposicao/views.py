@@ -56,6 +56,20 @@ class AceitarCreateView(UpdateView):
     success_url = reverse_lazy('reposicao:reposicao')
     fields = ['status']
 
+    def get_queryset(self):
+        if ('aceita' in self.request.POST):
+            lista = models.Autorizacao.objects.all()
+            for obj in lista:
+                if ('teste' in obj):
+                    partidaatual = models.Autorizacao.objects.get(id=obj.id)
+                    status = int(partidaatual.status)
+                    status = status + 1
+                    models.Autorizacao.objects.filter(id=obj.id).update(status=status)
+                    
+    def post(self, request, *args, **kwargs):
+        if ('aceita' in self.request.POST):
+            return self.get(request, *args, **kwargs)
+
 
 class NegarCreateView(UpdateView):
     model = models.Autorizacao

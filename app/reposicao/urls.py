@@ -16,9 +16,13 @@ urlpatterns = [
     #Home
      path('reposicao/', core.Home.as_view(template_name='core/reposicao/home.html'), name='reposicao'),
 
+     path('perfil/<pk>', core.Perfil.as_view(), name='perfil'),
 
      #formulario de Reposição
      path('reposicao/formrep/', core.Reposicao.as_view(), name='formrep'),
+
+     #formulario de Adiantamento de aula
+     path('reposicao/formadianta/', core.Adiantamento.as_view(), name='formadianta'),
 
      path('reposicao/aceitar/<pk>/', core.Aceitar.as_view(), name='aceitar'),
 

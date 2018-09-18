@@ -13,6 +13,13 @@ from . import models
 class Home(TemplateView):
     template_name = 'home.html'
 
+class Perfil(UpdateView):
+    model = models.UUIDUser
+    template_name = 'core/reposicao/perfil.html'
+    success_url = reverse_lazy('reposicao:reposicao')
+    fields = ['first_name', 'last_name', 'password', 'email', 'cpf', 'registration', 'picture']
+    
+
 class Reposicao(CreateView):
     model = models.Solicitacao
     template_name = 'core/reposicao/formreposicao.html'
@@ -24,6 +31,20 @@ class Reposicao(CreateView):
          obj.user = self.request.user
          obj.save()
          return super(Reposicao, self).form_valid(form)
+
+class Adiantamento(CreateView):
+    model = models.Solicitacao
+    template_name = 'core/reposicao/formadiantamento.html'
+    success_url = reverse_lazy('reposicao:reposicao')
+    fields = ['date_miss_start','date_miss_end', 'justification', 'reason','othes','team']
+
+    def form_valid(self, form):
+         obj = form.save(commit=False)
+         obj.user = self.request.user
+         obj.save()
+         return super(Adiantamento, self).form_valid(form)
+
+
 
 class AceitarCreateView(UpdateView):
     model = models.Autorizacao

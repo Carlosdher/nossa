@@ -6,19 +6,23 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
-from . import models
+from . import models, forms
 
 
 
 class Home(TemplateView):
     template_name = 'home.html'
 
-class Perfil(UpdateView):
+class Perfil(ListView):
     model = models.UUIDUser
     template_name = 'core/reposicao/perfil.html'
+
+class PerfilUpdate(UpdateView):
+    model = models.UUIDUser
+    template_name = 'core/user/formup.html'
     success_url = reverse_lazy('reposicao:reposicao')
-    fields = ['first_name', 'last_name', 'password', 'email', 'cpf', 'registration', 'picture']
-    
+    form_class = forms.UUIDUserForm
+
 
 class Reposicao(CreateView):
     model = models.Solicitacao
@@ -50,20 +54,20 @@ class AceitarCreateView(UpdateView):
     model = models.Autorizacao
     template_name = 'core/reposicao/aceitar.html'
     success_url = reverse_lazy('reposicao:reposicao')
-    fields = ['status', 'solicitation']
+    fields = ['status']
 
 
 class NegarCreateView(UpdateView):
     model = models.Autorizacao
     template_name = 'core/reposicao/negar.html'
     success_url = reverse_lazy('reposicao:reposicao')
-    fields = ['status','justification_Aceit', 'solicitation']
+    fields = ['status','justification_Aceit']
 
 
 class Aceitar(UpdateView):
     model = models.Autorizacao
     template_name = 'core/reposicao/acite.html'
-    fields = [ 'status', 'justification_Aceit', 'solicitation']
+    fields = [ 'status', 'justification_Aceit']
 
     def get_context_data(self, **kwargs):
         kwargs['solicitacao'] = models.Solicitacao.objects.all()

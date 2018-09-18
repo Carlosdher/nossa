@@ -4,6 +4,6 @@
         <form method="POST">
           {% csrf_token %}
           <input type="hidden" id="status" name="status" value="2" />
-          <input type="hidden" name="solicitation" id="status" value="{{object}}">
+          <input type="submit" value="Enviar">
         </form>
 {% endblock %}

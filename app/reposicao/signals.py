@@ -12,7 +12,11 @@ def create_Solicitation(sender, instance, created, **kwargs):
 
     if created:
         models.Autorizacao.objects.create(solicitation = instance, status = 1)
-        pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %instance.pk
+        lista = models.Autorizacao.objects.all()
+        for objeto in lista:
+            if objeto.solicitation == instance:
+                pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %objeto.pk
+
         email = mail.EmailMessage(
             'Hello',
             pk,
@@ -21,7 +25,7 @@ def create_Solicitation(sender, instance, created, **kwargs):
             connection=connection,)
         email.send()
         connection.close()
-        models.Autorizacao.objects.create(solicitation = instance, status = 1)
+        
 
 post_save.connect(create_Solicitation, sender=models.Solicitacao)
 

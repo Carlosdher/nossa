@@ -16,7 +16,9 @@ urlpatterns = [
     #Home
      path('reposicao/', core.Home.as_view(template_name='core/reposicao/home.html'), name='reposicao'),
 
-     path('perfil/<pk>', core.Perfil.as_view(), name='perfil'),
+     path('perfil/', core.Perfil.as_view(), name='perfil'),
+
+     path('perfilup/<pk>/', core.PerfilUpdate.as_view(), name='perfilup'),
 
      #formulario de Reposição
      path('reposicao/formrep/', core.Reposicao.as_view(), name='formrep'),
@@ -26,12 +28,12 @@ urlpatterns = [
 
      path('reposicao/aceitar/<pk>/', core.Aceitar.as_view(), name='aceitar'),
 
-     path('reposicao/aceitarform/<pk>', core.AceitarCreateView.as_view(), name='aceitar-create'),
+     path('reposicao/aceitarform/<pk>/', core.AceitarCreateView.as_view(), name='aceitar-create'),
 
-     path('reposicao/negarform/<pk>', core.NegarCreateView.as_view(), name='negar-create'),
+     path('reposicao/negarform/<pk>/', core.NegarCreateView.as_view(), name='negar-create'),
 
 
-     path('reposicao/historico/', core.Historico.as_view(), name='historico')
+     path('reposicao/historico/', core.Historico.as_view(), name='historico'),
 
 
 ]

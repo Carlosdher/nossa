@@ -4,57 +4,10 @@
 <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
   <p>Nome: {{ request.user.username }}</p>
   <p>Matricula: {{ request.user.registration }} </p>
-
+  {% for object in object_list %}
+  	{% if object.pk == request.user.pk %}
+   <a href="{% url 'reposicao:perfilup' object.pk %}"><button>Editar</button></a>
+   	{% endif %}
    <!-- Content Header (Page header) -->
-  <section class="content-header">
-      <h1>
-        Editar
-        <small>usuários</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-building-o"></i> Usuários</a></li>
-        <li class="active">Editar usuário</li>
-      </ol>
-    </section>
-  
-    <!-- Main content -->
-    <section class="content">
-      <div class="box box-danger">
-        <div class="box-header with-border">
-          <h3 class="box-title">Formulário</h3>
-        </div>
-        <!-- /.box-header -->
-        <!-- form start -->
-        <form action="{% url 'reposicao:perfil' %}" class="form-horizontal" method="POST">
-          {% csrf_token %}
-
-          {% for hidden in form.hidden_fields %}
-            {{ hidden }}
-          {% endfor %}
-
-          <div class="box-body">
-          {% for field in form.visible_fields %}
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">{{ field.label }}</label>
-              <div class="col-sm-10">
-                {{ field|add_class:'form-control' }}
-                {% for error in field.errors %}
-                  <span class="help-block">{{ error }}</span>
-                {% endfor %}
-              </div>
-            </div>
-          {% endfor %}
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="submit" class="btn btn-danger pull-right">Salvar</button>
-            <a href="#" class="btn btn-default">Cancel</a>
-          </div>
-          <!-- /.box-footer -->
-        </form>
-      </div>
-    </section>
-</section>
-
-
+  {% endfor %}
 {% endblock %}

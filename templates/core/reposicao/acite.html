@@ -4,33 +4,33 @@
 
         <h2>Requerimento de Reposicao</h2>
 
-        <p>Professor: {{ solicitacao.user.username }}</p>
+        <p>Professor: {{ object.solicitation.user.username }}</p>
 
-        <p>Matricula: {{ solicitacao.user.registration }} </p>
+        <p>Matricula: {{ object.solicitation.user.registration }} </p>
 
-        <p>Turma/Periodo: {{solicitacao.team}}</p>
+        <p>Turma/Periodo: {{object.solicitation.team}}</p>
 
-        <p>Período da falta: {{solicitacao.date_miss_start}} à {{solicitacao.date_miss_end}}</p>
+        <p>Período da falta: {{object.solicitation.date_miss_start}} à {{object.solicitation.date_miss_end}}</p>
 
-        {% if solicitacao.othes %}
+        {% if object.solicitation.othes %}
 
-          <p>Motivo: {{solicitacao.othes}}</p>
+          <p>Motivo: {{object.solicitation.othes}}</p>
 
         {% else %}
-          <p>Motivo: {{solicitacao.reason}}</p>
+          <p>Motivo: {{object.solicitation.reason}}</p>
 
         {% endif %}
-        <p>Justificativa: {{solicitacao.justification}}</p>
+        <p>Justificativa: {{object.solicitation.justification}}</p>
 
-        <form action="{% url 'reposicao:aceitar-create {{object_list.pk}}' %}" method="POST">
+        <form action="{% url 'reposicao:aceitar-create' object.pk %}" method="POST">
             {% csrf_token %}
             <input type="hidden" id="status" name="status" value="2" />
-            <input type="hidden" id="solicitation" name="solicitation" value="{{solicitacao}}" />
+            <input type="hidden" id="solicitation" name="solicitation" value="{{solicitation}}" />
             <button type="submit">Aceitar</button>
           </form>
-          <form action="{% url 'reposicao:negar-create {{object_list.pk}}' %}">
+          <form action="{% url 'reposicao:negar-create' object.pk %}">
             <input type="hidden" id="status" name="status" value="0">
-            <input type="hidden" id="solicitation" name="solicitation" value="{{solicitacao}}" />
+            <input type="hidden" id="solicitation" name="solicitation" value="{{solicitation}}" />
             <input type="submit" value="Negar" />
           </form>
 

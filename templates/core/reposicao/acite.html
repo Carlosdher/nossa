@@ -4,9 +4,9 @@
 
         <h2>Requerimento de Reposicao</h2>
 
-        <p>Professor: {{ object.solicitation.user.username }}</p>
+        <p>Professor: {{ object.solicitation.usuario.username }}</p>
 
-        <p>Matricula: {{ object.solicitation.user.registration }} </p>
+        <p>Matricula: {{ object.solicitation.usuario.registration }} </p>
 
         <p>Turma/Periodo: {{object.solicitation.team}}</p>
 
@@ -24,7 +24,7 @@
 
         <form action="{% url 'reposicao:aceitar-create' object.pk %}" method="POST">
             {% csrf_token %}
-            <input type="hidden" name="teste" value="{{object}}" /> 
+            <input type="hidden" name="teste" value="{{object}}" />
             <input type="hidden" name="aceita" value="aceita" />
             <button type="submit">Aceitar</button>
           </form>

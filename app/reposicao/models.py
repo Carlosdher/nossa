@@ -29,6 +29,7 @@ class Turma(models.Model):
 
 
 class Solicitacao(CreateUpdateModel):
+    usuario = models.ForeignKey(UUIDUser,on_delete=models.CASCADE,related_name="user",verbose_name='Usuário')
     justification = models.TextField(verbose_name='Justificativa')
     date_miss_start = models.DateField(verbose_name='Data da Falta Inicial')
     date_miss_end = models.DateField(verbose_name='Data da Falta Final')
@@ -50,7 +51,9 @@ class Autorizacao(CreateUpdateModel):
     STATUS = (
     (0, 'Negada'),
     (1, 'Andamento'),
-    (2, 'Aceita')
+    (2, 'Andamento'),
+    (3, 'Andamento'),
+    (4, 'Aceita')
             )
     solicitation = models.ForeignKey(Solicitacao, on_delete=models.CASCADE)
     justification_Aceit = models.TextField(null=True, blank=True, verbose_name='Justificativa')

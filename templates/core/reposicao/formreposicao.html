@@ -1,15 +1,45 @@
 {% extends '../base.html'%}
+{% load widget_tweaks %}
 {% block content %}
-<ol style="float: right;"class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+<section class="content-header" >
+  <h1>Formulário de Reposição <small>Formulário de preenchimento da solicição de Reposição</small></h1>
+
+  <ol class="breadcrumb">
+        <li><a href="{% url 'core:dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Reposição de Aula</li>
-</ol>
+  </ol>
+</section>
+<div class="box box-success" >
+
+<div class="box box-default"  >
+
+
 <form method="post">
   {% csrf_token %}
-    {{ form.as_p }}
-    <input type="hidden" name="usuario" id="usuario" value="{{ request.user.first_name }}{{ request.user.lest_name }}">
-    <input type="hidden" name="matricula" id="matricula"  value="{{ request.user.registration }}">
-    <a href="{% url 'reposicao:reposicao' %}" class="btn btn-default">Close</a>
-    <input type="submit" value="Save" />
+  <div class="box-body">
+  {% for field in form.visible_fields %}
+  <div class="row">
+
+    <div class="col-md-200">
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ field.label }}</label>
+      <div class="col-md-6">
+        {{ field|add_class:'form-control ' }}
+
+        {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+        {% endfor %}
+      </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+    <input type="hidden" name="usuario" id="usuario" value="{{ resquest.user }}">
+    <a href="{% url 'reposicao:reposicao' %}" class="btn btn-danger">Close</a>
+    <input type="submit" class="btn btn-primary"  value="Save" />
 </form>
+</div>
+</div>
+</div>
 {% endblock %}

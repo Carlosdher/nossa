@@ -32,7 +32,19 @@ post_save.connect(create_Solicitation, sender=models.Solicitacao)
 
 
 
-def Autorizar(sender, instance, **kwargs):
+def Autorizar(sender, instance, created, **kwargs):
+
+        if created:
+            pk = str('127.0.0.1:8000/reposicao/alterar/%s') %(instance.pk)
+            email = mail.EmailMessage(
+                'Solicitacao Negada',
+                pk,
+                'carlosabc436@gmail.com',
+                ['megatronstall@gmail.com'],
+                connection=connection,)
+            email.send()
+            connection.close()
+            models.Autorizacao.objects.filter(id=instance.pk).update(status=(instance.status + 1))
 
         if instance.status == 0:
             pk = str('Caro discente sua Solicitacao de Reposicao foi negada pelos seguintes motivos:'
@@ -58,5 +70,7 @@ def Autorizar(sender, instance, **kwargs):
                 connection=connection,)
             email.send()
             connection.close()
+            models.Autorizacao.objects.filter(id=instance.pk).update(status=(instance.status + 1))
+
 
 post_save.connect(Autorizar, sender=models.Autorizacao)

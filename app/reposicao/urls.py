@@ -35,5 +35,7 @@ urlpatterns = [
 
      path('reposicao/historico/', core.Historico.as_view(), name='historico'),
 
+     path('teste/', core.Teste.as_view(), name="aa")
+
 
 ]

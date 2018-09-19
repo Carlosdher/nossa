@@ -1,5 +1,12 @@
 
 # -*- coding: utf-8 -*-
+from django.views.generic import View
+
+from django.contrib import admin
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+
+
 
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
@@ -7,7 +14,9 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from . import models, forms
+from django.shortcuts import render
 
+from .teste import render_pdf
 
 
 class Home(TemplateView):
@@ -92,7 +101,14 @@ class Historico(ListView):
     def get_queryset(self):
         return models.Autorizacao.objects.all()
 
-
+class Teste(View):
+    def get(self, request, *args, **kwargs):
+        dados = {
+        'nome' : "eu" ,
+        "idade" : 12,
+        }
+        pdf = render_pdf("core/reposicao/as.html", {"dados": dados})
+        return HttpResponse(pdf, content_type="application/pdf")
 
 
 

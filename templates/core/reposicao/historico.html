@@ -1,17 +1,35 @@
 {% extends '../base.html'%}
 
 {% block content %}
-<div class="wrapper">
-  <div class="box-tools">
-      <div class="input-group input-group-sm" style="width: 150px;">
-          <input type="text" name="table_search" class="form-control pull-left" placeholder="Search">
+<section class="content-header">
+    <h1>
+      Usuários
+      <small>it all starts here</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Examples</a></li>
+      <li class="active">Blank page</li>
+    </ol>
+    <div class="box-tools">
+      <div class="input-group input-group-sm">
 
+        <form method="get">
+          {% csrf_token %}
           <div class="input-group-btn">
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            <input class="form-control pull-left" placeholder="Search" type="text" name="name" id="name">
+            <button type="submit" class="btn btn-default" name="search" id="search"><i class="fa fa-search"></i></button>
           </div>
+        </form>
       </div>
-  </div>
 
+    </div>
+
+</section>
+
+  <!-- Main content -->
+  <section class="content">
+  <div class="wrapper">
   <div class="box-body table-responsive no-padding">
     <table class="table table-hover">
             <tr>
@@ -63,4 +81,6 @@
 
       </div>
 </div>
+</div>
+</section>
 {% endblock %}

@@ -16,11 +16,24 @@ from django.urls import reverse_lazy
 from . import models, forms
 from django.shortcuts import render
 
+
 from .teste import render_pdf
 
 
 class Home(TemplateView):
     template_name = 'home.html'
+
+class Lista(ListView):
+    model = models.UUIDUser
+    template_name = 'core/reposicao/tabela.html'
+
+    def get_queryset(self):
+        if 'search' in self.request.GET:
+            teachers = models.UUIDUser.objects.filter(first_name=self.request.GET['name'])
+            return teachers
+        else:
+            teachers = models.UUIDUser.objects.all()
+            return teachers
 
 class Perfil(ListView):
     model = models.UUIDUser
@@ -99,7 +112,13 @@ class Historico(ListView):
         return super(Historico, self).get_context_data(**kwargs)
 
     def get_queryset(self):
-        return models.Autorizacao.objects.all()
+        if 'search' in self.request.GET:
+            information = models.Autorizacao.objects.solicitation.usuario.filter(first_name=self.request.GET['name'])
+            return information
+        else:
+            information = models.Autorizacao.objects.all()
+            return information
+
 
 class Teste(View):
     def get(self, request, *args, **kwargs):
@@ -109,6 +128,10 @@ class Teste(View):
         }
         pdf = render_pdf("core/reposicao/as.html", {"dados": dados})
         return HttpResponse(pdf, content_type="application/pdf")
+
+
+
+
 
 
 

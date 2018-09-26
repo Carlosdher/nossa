@@ -23,7 +23,7 @@ urlpatterns = [
     # Core: auth
     path('', include('app.core.urls'), name='core'),
 
-    # Ctrl_p
+    # Reposicao
     path('', include('app.reposicao.urls'), name='reposicao')
 
 ]

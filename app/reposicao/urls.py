@@ -15,10 +15,12 @@ urlpatterns = [
 
     #Home
      path('reposicao/', core.Home.as_view(template_name='core/reposicao/home.html'), name='reposicao'),
-
+    #Usuários
      path('perfil/', core.Perfil.as_view(), name='perfil'),
-
      path('perfilup/<pk>/', core.PerfilUpdate.as_view(), name='perfilup'),
+
+
+     #-----------------Formularios------------------------
 
      #formulario de Reposição
      path('reposicao/formrep/', core.Reposicao.as_view(), name='formrep'),
@@ -35,7 +37,9 @@ urlpatterns = [
 
      path('reposicao/historico/', core.Historico.as_view(), name='historico'),
 
-     path('teste/', core.Teste.as_view(), name="aa")
+     path('teste/', core.Teste.as_view(), name="aa"),
+
+     path('reposicao/professores', core.Lista.as_view(), name='professores'),
 
 
 ]

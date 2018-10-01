@@ -40,10 +40,12 @@
               <th>Data de Reposicao</th>
               <th>Status</th>
             </tr>
+            {%if request.user.is_staff%}
             {% for solicitation in solicitacao %}
+
             <tr>
-                <td>{{ solicitation.user.first_name }}{{solicitation.user.last_name}}</td>
-                <td>{{ solicitation.user.registration }}</td>
+                <td>{{ solicitation.usuario.first_name }}{{solicitation.usuario.last_name}}</td>
+                <td>{{ solicitation.usuario.registration }}</td>
                 <td>{{solicitation.date_miss_start}} - {{solicitation.date_miss_end}}</td>
                 <td>{{solicitation.team}}</td>
                 {% if Planejamento %}
@@ -76,6 +78,48 @@
                   {% endfor %}
                 </tr>
               {% endfor %}
+            {% else %}
+              {% for solicitation in solicitacao %}
+              {%if request.user.username == solicitation.usuario.username%}
+
+              <tr>
+                  <td>{{ solicitation.usuario.first_name }}{{solicitation.usuario.last_name}}</td>
+                  <td>{{ solicitation.usuario.registration }}</td>
+                  <td>{{solicitation.date_miss_start}} - {{solicitation.date_miss_end}}</td>
+                  <td>{{solicitation.team}}</td>
+                  {% if Planejamento %}
+                    {% for plannig in Planejamento %}
+                      {% if plannig.solicitation == solicitation %}
+                      <td>{{ plannig }}</td>
+                      {% else %}
+                        <td>---------</td>
+                      {% endif %}
+                    {% endfor %}
+                  {% else %}
+                    <td>---------</td>
+                  {% endif %}
+                  {% for object in object_list %}
+                      {% if object.solicitation == solicitation %}
+
+                        {% if object.status == 4 %}
+
+                            <td class="label label-success">Aprovada</td>
+
+                        {% elif object.status == 0 %}
+
+                          <td class="label label-danger">Negada</td>
+                        {% else %}
+
+                          <td class="label label-warning">Em Andamento</td>
+
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                  </tr>
+                {% endfor %}
+
+            {% endif %}
 
         </table>
 

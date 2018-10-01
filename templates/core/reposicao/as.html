@@ -2,10 +2,40 @@
 <html >
   <head>
     <meta charset="utf-8">
+
     <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Notable|PT+Sans|Srisakdi" rel="stylesheet">
   </head>
+  <style>
+    td{
+       text-align:center;
+       white-space: nowrap;
+    }
+
+	</style>
   <body>
-    <p>Nome : {{dados.nome}}</p>
-    <h2>idade : {{dados.idade}}</h2>
+    <h1> Relatório de Solicitações de Reposicões</h1>
+    <table>
+      <tr>
+        <td >Nome do usuário </td>
+        <td>Justificativa</td>
+        <td>Período da falta</td>
+        <td>Motivo</td>
+        <td>Turma</td>
+      </tr>
+  {% for object in dados %}
+  <tr>
+    <td>{{object.usuario.first_name}} <span style="color: #FFF;" >*</span> {{object.usuario.last_name}}</td>
+    <td>{{object.justification}}</td>
+    <td style="width: 60%; text-align:center;" >{{object.date_miss_start}} - {{object.date_miss_end}}</td>
+    <td>{{object.reason}}</td>
+
+    <td>{{object.team}}</td>
+
+  </tr>
+  {% endfor %}
+  </table>
+  </br>
+
   </body>
 </html>

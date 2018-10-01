@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['*']
 # EmailMessage
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = 'Carlos<carlosabc436@gmail.com>'
-ACCOUNT_ACTIVATION_DAYS = 3
+ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'carlosabc436@gmail.com'
 EMAIL_HOST_PASSWORD = "arroz123"

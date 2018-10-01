@@ -13,7 +13,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
-from . import models, forms
+from . import models, forms, tasks
 from django.shortcuts import render
 
 
@@ -28,12 +28,13 @@ class Lista(ListView):
     template_name = 'core/reposicao/tabela.html'
 
     def get_queryset(self):
+        tasks.add.delay(1,2)
         if 'search' in self.request.GET:
             teachers = models.UUIDUser.objects.filter(first_name=self.request.GET['name'])
             return teachers
         else:
-            teachers = models.UUIDUser.objects.all()
-            return teachers
+            return models.UUIDUser.objects.all()
+
 
 class Perfil(ListView):
     model = models.UUIDUser
@@ -57,6 +58,11 @@ class Reposicao(CreateView):
          obj.usuario = self.request.user
          obj.save()
          return super(Reposicao, self).form_valid(form)
+    def get_queryset(self):
+        if 'sender' in self.request.POST:
+            tasks.send_email.delay(model)
+        return models.Solicitacao.objects.all()
+
 
 class Adiantamento(CreateView):
     model = models.Solicitacao
@@ -107,25 +113,30 @@ class Historico(ListView):
 
     def get_context_data(self, **kwargs):
         kwargs['Planejamento'] = models.Planejamento.objects.all()
-        kwargs['solicitacao'] = models.Solicitacao.objects.all()
+        if 'search' in self.request.GET:
+            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.user.first_name)
+        else:
+            kwargs['solicitacao'] = models.Solicitacao.objects.all()
 
         return super(Historico, self).get_context_data(**kwargs)
 
     def get_queryset(self):
         if 'search' in self.request.GET:
-            information = models.Autorizacao.objects.solicitation.usuario.filter(first_name=self.request.GET['name'])
+            information = models.Autorizacao.objects.filter(solicitation__usuario__first_name=self.request.user.first_name)
             return information
         else:
-            information = models.Autorizacao.objects.all()
-            return information
+            if self.request.user.is_staff:
+                information = models.Autorizacao.objects.all()
+                return information
+            else:
+                information = models.Autorizacao.objects.filter(solicitation__usuario__first_name=self.request.user.first_name)
+                return information
+
 
 
 class Teste(View):
     def get(self, request, *args, **kwargs):
-        dados = {
-        'nome' : "eu" ,
-        "idade" : 12,
-        }
+        dados = models.Solicitacao.objects.all()
         pdf = render_pdf("core/reposicao/as.html", {"dados": dados})
         return HttpResponse(pdf, content_type="application/pdf")
 

@@ -8,7 +8,7 @@ def render_pdf(url_template, context={}):
     template=get_template(url_template)
     html = template.render(context)
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type="application/pdf")
     return None

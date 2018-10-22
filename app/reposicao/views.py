@@ -58,10 +58,6 @@ class Reposicao(CreateView):
          obj.usuario = self.request.user
          obj.save()
          return super(Reposicao, self).form_valid(form)
-    def get_queryset(self):
-        if 'sender' in self.request.POST:
-            tasks.send_email.delay(model)
-        return models.Solicitacao.objects.all()
 
 
 class Adiantamento(CreateView):
@@ -114,7 +110,11 @@ class Historico(ListView):
     def get_context_data(self, **kwargs):
         kwargs['Planejamento'] = models.Planejamento.objects.all()
         if 'search' in self.request.GET:
-            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.user.first_name)
+            try:
+                dado = int(self.request.GET['name'])
+                kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'])
+            except:
+                kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.GET['name'])
         else:
             kwargs['solicitacao'] = models.Solicitacao.objects.all()
 

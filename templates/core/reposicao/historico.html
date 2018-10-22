@@ -44,9 +44,9 @@
             {% for solicitation in solicitacao %}
 
             <tr>
-                <td>{{ solicitation.usuario.first_name }}{{solicitation.usuario.last_name}}</td>
+                <td>{{ solicitation.usuario.first_name }} {{solicitation.usuario.last_name}}</td>
                 <td>{{ solicitation.usuario.registration }}</td>
-                <td>{{solicitation.date_miss_start}} - {{solicitation.date_miss_end}}</td>
+                <td>{% if solicitation.date_miss_start.day <= 9 %} 0{{solicitation.date_miss_start.day}}{% else %}{{solicitation.date_miss_start.day}}{% endif %}/{% if solicitation.date_miss_start.month <= 9 %}0{{solicitation.date_miss_start.month}}{% else %}{{solicitation.date_miss_start.month}}{% endif %}/{{solicitation.date_miss_start.year}} - {% if solicitation.date_miss_end.day <= 9 %} 0{{solicitation.date_miss_end.day}}{% else %} {{solicitation.date_miss_end.day}}{% endif %}/{% if solicitation.date_miss_end.month <= 9 %}0{{solicitation.date_miss_end.month}}{% else %}{{solicitation.date_miss_end.month}}{% endif %}/{{solicitation.date_miss_end.year}}</td>
                 <td>{{solicitation.team}}</td>
                 {% if Planejamento %}
                   {% for plannig in Planejamento %}

@@ -7,17 +7,17 @@ from django.core.mail import EmailMessage
 from django.core import mail
 from . import models
 from . import views
+connection = mail.get_connection()
+connection.open()
 
 
 
 
 @shared_task
-def send_email(lista,instace):
-    for objeto in lista:
-        if objeto.solicitation == instance:
-            pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %objeto.pk
-            mensagen = str('Solicitacão de reposição de Aula \n Caro Coordenador, por meio desse email comunico que estarei ausente, pelo motivo de %s \n no período de %s à %s \n Para aceitar ou negar acesse o link : %s',)%(instance.reason,instance.date_miss_start,instance.date_miss_end,pk)
-
+def send_email(data_end,data, motivo, id):
+    print ('objeto ola')
+    pk = str('127.0.0.1:8000/reposicao/aceitar/%s')%id
+    mensagen = str('Solicitacão de reposição de Aula \n Caro Coordenador, por meio desse email comunico que estarei ausente, pelo motivo de %s \n no período de %s à %s \n Para aceitar ou negar acesse o link : %s',)%(motivo, data, data_end, pk)
     email = mail.EmailMessage(
         'Solicitacao De reposição',
         mensagen,
@@ -25,5 +25,5 @@ def send_email(lista,instace):
         ['megatronstall@gmail.com'],
         connection=connection,)
     email.send()
-    connection.close()
-    print('deu certo, na tua cara will')
+
+connection.close()

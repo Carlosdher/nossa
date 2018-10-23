@@ -183,6 +183,26 @@
   $(document).ready(function () {
     $('.sidebar-menu').tree()
   })
+
+  valor = document.getElementsByClassName('java')
+
+  rasao = document.getElementsByClassName('java').value
+  outro = document.getElementsById('outro')
+
+  valor.onkeypress = function(e) {
+      // 13 é a tecla <ENTER>. Se ela for pressionada, mostrar o valor
+      if (e.keyCode == 13) {
+          Outros();
+          e.preventDefault();
+      }
+  }
+
+
+function Outros () {
+  if (rasao == 'Outros'){
+    outro.style.display = 'block'
+  }
+}
 </script>
 </body>
 </html>

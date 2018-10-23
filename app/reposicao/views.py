@@ -28,7 +28,6 @@ class Lista(ListView):
     template_name = 'core/reposicao/tabela.html'
 
     def get_queryset(self):
-        tasks.add.delay(1,2)
         if 'search' in self.request.GET:
             teachers = models.UUIDUser.objects.filter(first_name=self.request.GET['name'])
             return teachers

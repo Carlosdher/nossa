@@ -79,6 +79,15 @@ class AceitarCreateView(UpdateView):
     success_url = reverse_lazy('reposicao:reposicao')
     fields = ['status']
 
+    # def get_queryset(self):
+    #     if 'aceita' in self.request.POST:
+    #         autorizacao = models.Autorizacao.objects.get(id = self.request.POST['objeto'])
+    #         status = int(autorizacao.status)
+    #         status = status + 1
+    #         print (status)
+    #         models.Autorizacao.objects.filter(id = self.request.POST['objeto']).update(status=status)
+    #     return models.Autorizacao.objects.all()
+
 
 
 
@@ -89,16 +98,26 @@ class NegarCreateView(UpdateView):
     fields = ['status','justification_Aceit']
 
 
-class Aceitar(UpdateView):
+
+
+class Aceitar(DetailView):
     model = models.Autorizacao
     template_name = 'core/reposicao/acite.html'
-    fields = [ 'status', 'justification_Aceit']
 
     def get_context_data(self, **kwargs):
         kwargs['solicitacao'] = models.Solicitacao.objects.all()
         return super(Aceitar, self).get_context_data(**kwargs)
-
     def get_queryset(self):
+        # if 'aceita' in self.request.POST:
+        #     autorizacao = models.Autorizacao.objects.get(id = self.request.POST['objeto'])
+        #     status = int(autorizacao.status)
+        #     status = status + 1
+        #     print (status)
+        #     models.Autorizacao.objects.filter(id = self.request.POST['objeto']).update(status=status)
+        # if 'Negar' in self.request.POST:
+        #     autorizacao = models.Autorizacao.objects.get(id = self.request.POST['objeto'])
+        #     models.Autorizacao.objects.filter(id = self.request.POST['objeto']).update(status=0, justification_Aceit=self.request.POST['justificativa'])
+        #
         return models.Autorizacao.objects.all()
 
 class Historico(ListView):

@@ -47,43 +47,39 @@ post_save.connect(create_Solicitation, sender=models.Solicitacao)
 
 def Autorizar(sender, instance, created, **kwargs):
 
-        if created:
-            pk = str('127.0.0.1:8000/reposicao/alterar/%s') %(instance.pk)
-            email = mail.EmailMessage(
-                'Solicitacao Negada',
-                pk,
-                'carlosabc436@gmail.com',
-                ['megatronstall@gmail.com'],
-                connection=connection,)
-            email.send()
-            connection.close()
-            models.Autorizacao.objects.filter(id=instance.pk).update(status=(instance.status + 1))
+        # if created:
+        #     pk = str('127.0.0.1:8000/reposicao/alterar/%s') %(instance.pk)
+        #     email = mail.EmailMessage(
+        #         'Solicitacao Negada',
+        #         pk,
+        #         'carlosabc436@gmail.com',
+        #         ['megatronstall@gmail.com'],999lo
+        #         connection=connection,)
+        #     email.send()
+        #     connection.close()
+        #     models.Autorizacao.objects.filter(id=instance.pk).update(status=(instance.status + 1))
 
         if instance.status == 0:
-            pk = str('Caro discente sua Solicitacao de Reposicao foi negada pelos seguintes motivos:'
-            '\n \n \n %s'
-            '\n \n  Acesse o link para a alterações necessarias'
-            '\n \n \n 127.0.0.1:8000/reposicao/alterar/%s') %(instance.justification_Aceit, instance.pk)
-            email = mail.EmailMessage(
-                'Solicitacao Negada',
-                pk,
-                'carlosabc436@gmail.com',
-                ['megatronstall@gmail.com'],
-                connection=connection,)
-            email.send()
-            connection.close()
+            autori = models.Solicitacao.objects.all()
+            for object in autori:
+                if object == instance.solicitation :
+                   pk = str(object.id)
+            motivo = str(instance.justification_Aceit)
+            tasks.negar_email.delay(motivo, pk)
 
-        elif (instance.status == 2):
-            pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %(instance.pk)
-            email = mail.EmailMessage(
-                'Hello',
-                pk,
-                'carlosabc436@gmail.com',
-                ['carlosabc436@gmail.com'],
-                connection=connection,)
-            email.send()
-            connection.close()
-            models.Autorizacao.objects.filter(id=instance.pk).update(status=(instance.status + 1))
+        elif instance.status == 2 :
+            print (str(instance.status))
+            pk = str(instance.solicitation.id)
+            day = str(instance.solicitation.date_miss_start.day)
+            month = str(instance.solicitation.date_miss_start.month)
+            year = str(instance.solicitation.date_miss_start.year)
+            data = str('%s/%s/%s') %(day, month, year)
+            day_end = str(instance.solicitation.date_miss_end.day)
+            month_end = str(instance.solicitation.date_miss_end.month)
+            year_end = str(instance.solicitation.date_miss_end.year)
+            data_end = str('%s/%s/%s') %(day_end, month_end, year_end)
+            motivo = str(instance.solicitation.reason.name)
+            tasks.aceitar_email.delay(data_end,data, motivo, pk)
 
         # elif (instance.status < 4):
         #     pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %(instance.pk)

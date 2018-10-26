@@ -4,13 +4,15 @@
 
         <h2>Requerimento de Reposicao</h2>
 
+        <img src="{{ object.solicitation.usuario.picture_thumb.url }}">
+
         <p>Professor: {{ object.solicitation.usuario.username }}</p>
 
         <p>Matricula: {{ object.solicitation.usuario.registration }} </p>
 
         <p>Turma/Periodo: {{object.solicitation.team}}</p>
 
-        <p>Período da falta: {{object.solicitation.date_miss_start}} à {{object.solicitation.date_miss_end}}</p>
+        <p>Período da falta:{% if object.solicitation.date_miss_start.day <= 9 %} 0{{object.solicitation.date_miss_start.day}}{% else %}  {{object.solicitation.date_miss_start.day}}{% endif %}/{% if object.solicitation.date_miss_start.month <= 9 %}0{{object.solicitation.date_miss_start.month}}{% else %}{{object.solicitation.date_miss_start.month}}{% endif %}/{{object.solicitation.date_miss_start.year}} - {% if object.solicitation.date_miss_end.day <= 9 %} 0{{object.solicitation.date_miss_end.day}}{% else %} {{object.solicitation.date_miss_end.day}}{% endif %}/{% if object.solicitation.date_miss_end.month <= 9 %}0{{object.solicitation.date_miss_end.month}}{% else %}{{object.solicitation.date_miss_end.month}}{% endif %}/{{object.solicitation.date_miss_end.year}}</p>
 
         {% if object.solicitation.othes %}
 
@@ -23,28 +25,33 @@
         <p>Justificativa: {{object.solicitation.justification}}</p>
 
         
-
-        <form action="{% url 'reposicao:aceitar-create' object.pk %}" method="POST">
+        {% if request.user.is_staff %}
+        <form method="POST">
             {% csrf_token %}
-            <input type="hidden" name="aceita" value="aceita" />
-            <input type="hidden" name="objeto" value="{{object.pk}}">
-            <button type="submit">Aceitar</button>
+            {% if object.status == 1 %}
+              <input type="hidden" name="status" id="status" value="2">
+            {% elif object.status == 2 %}
+              <input type="hidden" name="status" id="status" value="3">
+            {% endif %}
+            <button type="submit" class="btn btn-success">Aceitar</button>
         </form>
-          <form action="{% url 'reposicao:negar-create' object.pk %}">
-            <input type="hidden" id="status" name="status" value="0">
-            <input type="submit" value="Negar" />
+        <form method="POST" >
+            {% csrf_token %}
+            <input type="hidden" name="status" id="status" value="0">
+            <input type="text" name="justification_Aceit" id ='justification_Aceit'>
+            <button type="submit" class="btn btn-danger">Negar</button>
           </form>
+        {% endif %}
         <!-- <form  method="POST">
             {% csrf_token %}
             <input type="hidden" name="aceita" value="aceita" />
             <input type="hidden" name="objeto" value="{{object.pk}}">
             <button type="submit" class="btn btn-primary">Aceitar</button>
           </form>
-          <form method="post" >
-            {% csrf_token %}
-            <input type="submit" value="Negar" id="Negar" class="btn btn-danger"/>
-            <input type="text" name="justification" id = 'justification' style="display: none;">
-            <button type="submit" style="display: none;" id="enviar">Enviar</button>
+          
+          <form method="POST">
+            <input type="hidden" id="status" name="status" value="0">
+            <input type="submit" value="Negar" />
           </form> -->
 
 

@@ -49,7 +49,7 @@ class PerfilUpdate(UpdateView):
 class Reposicao(CreateView):
     model = models.Solicitacao
     template_name = 'core/reposicao/formreposicao.html'
-    success_url = reverse_lazy('reposicao:reposicao')
+    success_url = reverse_lazy('reposicao:historico')
     fields = ['date_miss_start','date_miss_end', 'justification', 'reason','othes','team']
 
     def form_valid(self, form):
@@ -100,13 +100,16 @@ class NegarCreateView(UpdateView):
 
 
 
-class Aceitar(DetailView):
+class Aceitar(UpdateView):
     model = models.Autorizacao
     template_name = 'core/reposicao/acite.html'
+    success_url = reverse_lazy('reposicao:historico')
+    fields = ['status','justification_Aceit']
 
     def get_context_data(self, **kwargs):
         kwargs['solicitacao'] = models.Solicitacao.objects.all()
         return super(Aceitar, self).get_context_data(**kwargs)
+    
     def get_queryset(self):
         # if 'aceita' in self.request.POST:
         #     autorizacao = models.Autorizacao.objects.get(id = self.request.POST['objeto'])
@@ -117,7 +120,7 @@ class Aceitar(DetailView):
         # if 'Negar' in self.request.POST:
         #     autorizacao = models.Autorizacao.objects.get(id = self.request.POST['objeto'])
         #     models.Autorizacao.objects.filter(id = self.request.POST['objeto']).update(status=0, justification_Aceit=self.request.POST['justificativa'])
-        #
+        
         return models.Autorizacao.objects.all()
 
 class Historico(ListView):

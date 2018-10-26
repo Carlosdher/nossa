@@ -60,21 +60,21 @@
                 {% for object in object_list %}
                     {% if object.solicitation == solicitation %}
 
-                      {% if object.status == 4 %}
+                        {% if object.status == 3 %}
 
-                          <td class="label label-success">Aprovada</td>
+                            <td> <span class=" label label-success">Aprovada</span></td>
 
-                      {% elif object.status == 0 %}
+                        {% elif object.status == 0 %}
 
-                        <td class="label label-danger">Negada</td>
-                      {% else %}
+                          <td><span class=" label label-danger">Negada</span> </td>
+                        {% else %}
 
-                        <td class="label label-warning">Em Andamento</td>
+                          <td> <span class="label label-warning">Em Andamento</span></td>
 
                       {% endif %}
+                </tr>
                     {% endif %}
                   {% endfor %}
-                </tr>
               {% endfor %}
             {% else %}
               {% for solicitation in solicitacao %}
@@ -99,22 +99,23 @@
                   {% for object in object_list %}
                       {% if object.solicitation == solicitation %}
 
-                        {% if object.status == 4 %}
+                        {% if object.status == 3 %}
 
-                            <td class="label label-success">Aprovada</td>
+                            <td> <span class=" label label-success">Aprovada</span></td>
 
                         {% elif object.status == 0 %}
 
-                          <td class="label label-danger">Negada</td>
+                          <td><span class=" label label-danger">Negada</span> </td>
                         {% else %}
 
-                          <td class="label label-warning">Em Andamento</td>
+                          <td> <span class="label label-warning">Em Andamento</span></td>
+
 
                         {% endif %}
+                  </tr>
                       {% endif %}
                     {% endfor %}
                     {% endif %}
-                  </tr>
                 {% endfor %}
 
             {% endif %}
@@ -123,6 +124,9 @@
 
       </div>
 </div>
+<div class="box-footer">
+        Tabela de Reposições
+      </div>
 </div>
 </section>
 {% endblock %}

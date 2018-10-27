@@ -73,11 +73,11 @@ class Adiantamento(CreateView):
 
 
 
-class AceitarCreateView(UpdateView):
-    model = models.Autorizacao
-    template_name = 'core/reposicao/aceitar.html'
-    success_url = reverse_lazy('reposicao:reposicao')
-    fields = ['status']
+#class AceitarCreateView(UpdateView):
+ #   model = models.Autorizacao
+  #  template_name = 'core/reposicao/aceitar.html'
+   # success_url = reverse_lazy('reposicao:reposicao')
+    #fields = ['status']
 
     # def get_queryset(self):
     #     if 'aceita' in self.request.POST:
@@ -91,11 +91,11 @@ class AceitarCreateView(UpdateView):
 
 
 
-class NegarCreateView(UpdateView):
-    model = models.Autorizacao
-    template_name = 'core/reposicao/negar.html'
-    success_url = reverse_lazy('reposicao:reposicao')
-    fields = ['status','justification_Aceit']
+#class NegarCreateView(UpdateView):
+ #   model = models.Autorizacao
+  #  template_name = 'core/reposicao/negar.html'
+   # success_url = reverse_lazy('reposicao:reposicao')
+    #fields = ['status','justification_Aceit']
 
 
 
@@ -131,11 +131,22 @@ class Historico(ListView):
     def get_context_data(self, **kwargs):
         kwargs['Planejamento'] = models.Planejamento.objects.all()
         if 'search' in self.request.GET:
-            try:
-                dado = int(self.request.GET['name'])
-                kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'])
-            except:
-                kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.GET['name'])
+            if self.request.GET['name']:
+                try:
+                    dado = int(self.request.GET['name'])
+                    if self.request.GET['data_inicio'] :
+                        if self.request.GET['data_fim'] :
+                            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'], date_miss_end=self.request.GET['data_fim'] )
+                        else:
+                        kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'])
+                    else:
+                        kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'])
+                except:
+                    if self.request.GET['data_inicio'] :
+                        kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'] )
+                    else:
+                        kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'])
+
         else:
             kwargs['solicitacao'] = models.Solicitacao.objects.all()
 

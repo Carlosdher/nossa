@@ -1,10 +1,12 @@
 {% extends '../base.html' %}
 
 {% block content %}
+        {% if request.user.is_staff %}
 
-        <h2>Requerimento de Reposicao</h2>
 
-        <img src="{{ object.solicitation.usuario.picture_thumb.url }}">
+        <h2>Requerimento de Reposição</h2>
+
+        <img src="{{ object.solicitation.usuario.picture.url }}">
 
         <p>Professor: {{ object.solicitation.usuario.username }}</p>
 
@@ -25,7 +27,7 @@
         <p>Justificativa: {{object.solicitation.justification}}</p>
 
         
-        {% if request.user.is_staff %}
+        <div id='opcoes' >
         <form method="POST">
             {% csrf_token %}
             {% if object.status == 1 %}
@@ -35,14 +37,19 @@
             {% endif %}
             <button type="submit" class="btn btn-success">Aceitar</button>
         </form>
+        <button type="submit" class="btn btn-danger" id='Negar' onclick="justificativa()" >Negar</button>
+      </div>
+      <div style="display: none;" id="opcao_Negar"  >
         <form method="POST" >
             {% csrf_token %}
             <input type="hidden" name="status" id="status" value="0">
-            <input type="text" name="justification_Aceit" id ='justification_Aceit'>
-            <button type="submit" class="btn btn-danger">Negar</button>
+            <input type="text" name="justification_Aceit" id ='justification_Aceit' class="form-control"  placeholder="Justificativa de Negação">
+            <input id='voltar' class="btn btn-danger" onclick="Cancelar()" value='Cancelar' type="button">
+            <button type="submit" class="btn btn-primary">Enviar Justificativa</button>
           </form>
+      </div>
         {% endif %}
-        <!-- <form  method="POST">
+                <!-- <form  method="POST">
             {% csrf_token %}
             <input type="hidden" name="aceita" value="aceita" />
             <input type="hidden" name="objeto" value="{{object.pk}}">
@@ -54,7 +61,29 @@
             <input type="submit" value="Negar" />
           </form> -->
 
+<script>
+  
+  negar = document.getElementById('Negar');
+  aceitar = document.getElementById('opcoes');
+  form = document.getElementById('opcao_Negar');
+  voltar = document.getElementById('voltar')
 
+
+  function justificativa() {
+    // body...
+    negar.style.display  = 'none';
+    aceitar.style.display = 'none';
+    form.style.display = 'block';
+  }
+
+  function Cancelar() {
+    // body...
+    negar.style.display  = 'block';
+    aceitar.style.display = 'block';
+    form.style.display = 'none';
+  }
+
+</script>
 
 
 

@@ -41,7 +41,7 @@
   </div>
   {% endfor %}
     <input type="hidden" name="usuario" id="usuario" value="{{ resquest.user }}">
-    <a href="{% url 'reposicao:reposicao' %}" class="btn btn-danger">Close</a>
+    <a href="{% url 'core:dashboard' %}" class="btn btn-danger">Close</a>
     <input type="submit" class="btn btn-primary"  name="sender" id="sender" value="Save" />
 </form>
 </div>

@@ -138,31 +138,45 @@ class Historico(ListView):
                         if self.request.GET['data_fim'] :
                             kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'], date_miss_end=self.request.GET['data_fim'] )
                         else:
-                        kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'])
+                            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'])
                     else:
-                        kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'])
+                        if self.request.GET['data_fim'] :
+                            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'], date_miss_end=self.request.GET['data_fim'] )
+                        else:
+                            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'])
                 except:
                     if self.request.GET['data_inicio'] :
-                        kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'] )
+                        if self.request.GET['data_fim'] :
+                            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'], date_miss_end=self.request.GET['data_fim'] )
+                        else:
+                            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'] )
                     else:
-                        kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'])
-
+                        if self.request.GET['data_fim'] :
+                            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.GET['name'], date_miss_end=self.request.GET['data_fim'] )
+                        else:
+                            kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__first_name=self.request.GET['name'])
+            elif self.request.GET['data_inicio'] :
+                if self.request.GET['data_fim'] :
+                    kwargs['solicitacao'] = models.Solicitacao.objects.filter(date_miss_start = self.request.GET['data_inicio'], date_miss_end=self.request.GET['data_fim'] )
+                else:
+                    kwargs['solicitacao'] = models.Solicitacao.objects.filter(date_miss_start = self.request.GET['data_inicio'])
+            elif self.request.GET['data_fim'] :
+                kwargs['solicitacao'] = models.Solicitacao.objects.filter( date_miss_end=self.request.GET['data_fim'] )
+            else:
+                kwargs['erro'] = True
+                kwargs['solicitacao'] = models.Solicitacao.objects.all()
         else:
             kwargs['solicitacao'] = models.Solicitacao.objects.all()
 
         return super(Historico, self).get_context_data(**kwargs)
 
     def get_queryset(self):
-        if 'search' in self.request.GET:
-            information = models.Autorizacao.objects.filter(solicitation__usuario__first_name=self.request.user.first_name)
-            return information
+        if self.request.user.is_staff:
+            return models.Autorizacao.objects.all()
         else:
-            if self.request.user.is_staff:
-                information = models.Autorizacao.objects.all()
-                return information
-            else:
-                information = models.Autorizacao.objects.filter(solicitation__usuario__first_name=self.request.user.first_name)
-                return information
+            print ('não')
+            return models.Autorizacao.objects.filter(solicitation__usuario__first_name=self.request.user.first_name)
+
 
 
 

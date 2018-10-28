@@ -32,10 +32,11 @@
             {% csrf_token %}
             {% if object.status == 1 %}
               <input type="hidden" name="status" id="status" value="2">
+              <button type="submit" class="btn btn-success">Aceitar</button>
             {% elif object.status == 2 %}
               <input type="hidden" name="status" id="status" value="3">
+              <button type="submit" class="btn btn-success">Aceitar</button>
             {% endif %}
-            <button type="submit" class="btn btn-success">Aceitar</button>
         </form>
         <button type="submit" class="btn btn-danger" id='Negar' onclick="justificativa()" >Negar</button>
       </div>

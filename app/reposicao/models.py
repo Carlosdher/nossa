@@ -63,7 +63,6 @@ class Autorizacao(CreateUpdateModel):
 class Planejamento(CreateUpdateModel):
     solicitation = models.ForeignKey(Solicitacao, on_delete=models.CASCADE)
     components = models.CharField(max_length=100, verbose_name='Componente Curricular')
-    team = models.ForeignKey(Turma, on_delete=models.CASCADE)
     date_class = models.DateField(verbose_name='Data da Aula')
     date_restitution = models.DateField(verbose_name='Data da Reposição')
     descripition  = models.TextField(verbose_name='Descrição')

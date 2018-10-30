@@ -79,6 +79,21 @@ class Mensagem(DetailView):
         a.save()
         return HttpResponseRedirect('/reposicao/historico/')
 
+class Planejamento(DetailView):
+    model = models.Autorizacao
+    template_name = 'core/reposicao/planejamento.html'
+    def post(self, request, *args, **kwargs):
+        solicitacao = models.Solicitacao.objects.get(id=self.request.POST['solicitation'])
+        a =  models.Planejamento.objects.create(solicitation=solicitacao, components=self.request.POST['components'], date_class=self.request.POST['date_class'], date_restitution=self.request.POST['date_restitution'], descripition=self.request.POST['descripition'])
+        a.save()
+        return HttpResponseRedirect('/reposicao/historico/')
+
+class Solicitacaoedit(UpdateView):
+    model = models.Solicitacao
+    template_name = 'core/reposicao/solicitacaoedit.html'
+    success_url = reverse_lazy('reposicao:historico')
+    fields = ['date_miss_start','date_miss_end', 'justification', 'reason','othes','team']
+
 class MensagemUp(UpdateView):
     model = models.Troca
     template_name = 'core/reposicao/decisao.html'
@@ -194,7 +209,17 @@ class Historico(ListView):
             return models.Autorizacao.objects.filter(solicitation__usuario__first_name=self.request.user.first_name)
 
 
+class ImprimirPlanejamento(View):
+    model = models.Planejamento
+    template_name = 'core/reposicao/imprimirplanejamento.html'
 
+
+    def get(self, request, *args, **kwargs):
+        dados = models.Planejamento.objects.all()
+        pdf = render_pdf("core/reposicao/imprimirplanejamento.html", {"dados": dados})
+        return HttpResponse(pdf, content_type="application/pdf")
+    def get_queryset (self):
+        return models.Planejamento.objects.all()
 
 class Teste(View):
     def get(self, request, *args, **kwargs):

@@ -72,11 +72,19 @@
 
                         {% if object.status == 3 %}
 
-                            <td> <span class=" btn btn-success">Aprovada</span></td>
+                        {% if Planejamento %}
+                        {% for plannig in Planejamento %}
+                          {% if plannig.solicitation == solicitation %}
+                            <td> <span class=" btn btn-success">Aprovada</span><a href="{% url 'reposicao:imprimirplanejamento' plannig.pk %}"><i class='fa fa-print'><i></a></td>
+                          {% endif %}
+                        {% endfor %}
+                      {% else %}
+                      <td> <span class=" btn btn-success">Aprovada</span></td>
+                      {% endif %}
 
                         {% elif object.status == 0 %}
 
-                          <td><span class=" btn btn-danger">Negada</span> </td>
+                          <td><span class=" btn btn-danger">Negada</span><a href="{% url 'reposicao:solicitacaoedit' object.solicitation.pk %}" ><i style="font-size: 20px; margin-left: 4px; margin-top: 4px;" class="fa fa-edit "></i></a> </td>
                         {% else %}
 
                           <td> <span class="btn btn-warning">Em Andamento</span></td>
@@ -110,8 +118,15 @@
                       {% if object.solicitation == solicitation %}
 
                         {% if object.status == 3 %}
-
-                            <td> <span class=" btn btn-success">Aprovada</span></td>
+                        {% if Planejamento %}
+                        {% for plannig in Planejamento %}
+                          {% if plannig.solicitation == solicitation %}
+                            <td> <span class=" btn btn-success">Aprovada</span><a hrf="{% url 'reposicao:imprimirplanejamento' plannig.pk %}"><i class='fa fa-print'><i></a></td>
+                          {% endif %}
+                        {% endfor %}
+                      {% else %}
+                      <td> <span class=" btn btn-success">Aprovada</span></td>
+                      {% endif %}
 
                         {% elif object.status == 0 %}
 

@@ -45,5 +45,12 @@ urlpatterns = [
 
      path('reposicao/decisao/<pk>/', core.MensagemUp.as_view(), name='decisao'),
 
+     path('reposicao/planejamento/<pk>/', core.Planejamento.as_view(), name='planejamento'),
+
+     path('solicitacaoedit/<pk>/', core.Solicitacaoedit.as_view(), name='solicitacaoedit'),
+
+     path('imprimirplanejamento/<pk>/', core.ImprimirPlanejamento.as_view(), name='imprimirplanejamento'),
+
+
 
 ]

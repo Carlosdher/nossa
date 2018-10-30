@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Notable|PT+Sans|Srisakdi" rel="stylesheet">
+  </head>
+  <style>
+
+	</style>
+  <body>
+
+    {{object}}
+    {% for objeto in dados %}
+      {{objeto.id}}
+    {% endfor %}
+
+    <!-- <table>
+      <tr>
+        <th>Componente </th>
+        <th>Data da aula</th>
+        <th>Data da reposição</th>
+        <th>Descrição</th>
+
+
+      </tr>
+   {% for x in dados %}
+    {% if object.id == x.id %}
+    <td style="text-align:justify;">{{x.components}}</td>
+    <td>{{ x.date_class }}</td>
+    <td style="width: 60%; text-align:justify; padding-left: 50px" >{{ x.date_restitution }}</td>
+    <td>{{x.descripition}}</td>
+    </tr>
+    {% endif %}
+  {% endfor %} -->
+  <!-- </table>
+  </br> -->
+
+  </body>
+</html>

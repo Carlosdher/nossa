@@ -56,15 +56,17 @@ def aceitar_email(d,dat, mot, id):
 def aceitaremaildenovo(d,dat, mot, id):
     mensagen = str('Solicitacão de reposição de Aula \n Caro Coordenador, por meio desse email comunico que estarei ausente, pelo motivo de %s \n no período de %s à %s ')%(mot, dat, d)
     email = mail.EmailMessage(
-        'Solicitacao De reposição',
+        'Solicitacao de Reposição',
         mensagen,
         'carlosabc436@gmail.com',
         ['carlosabc436@gmail.com'],
         connection=connection,)
     email.send()
+    pk = str('127.0.0.1:8000/reposicao/planejamento/%s')%id
+    mensagem = str(' Caro Docente, por meio desse email comunico que sua solicitação de reposição foi aprovada. \n Para preencher o planejamento de aula acesse o link : %s',)%(pk)
     email1 = mail.EmailMessage(
-        'Solicitacao De reposição',
-        'oi',
+        'Solicitacao de Reposição',
+        mensagem,
         'carlosabc436@gmail.com',
         ['carlosabc436@gmail.com'],
         connection=connection,)

@@ -27,6 +27,23 @@ def create_Solicitation(sender, instance, created, **kwargs):
         data_end = str('%s/%s/%s') %(day_end, month_end, year_end)
         motivo = str(instance.reason.name)
         tasks.send_email.delay(data_end,data, motivo, id)
+
+    elif not created:
+        autori = models.Autorizacao.objects.all()
+        autorizacao = models.Autorizacao.objects.filter(solicitation = instance).update(status=1)
+        for object in autori:
+            if object.solicitation == instance :
+                id = str(object.id)
+        day = str(instance.date_miss_start.day)
+        month = str(instance.date_miss_start.month)
+        year = str(instance.date_miss_start.year)
+        data = str('%s/%s/%s') %(day, month, year)
+        day_end = str(instance.date_miss_end.day)
+        month_end = str(instance.date_miss_end.month)
+        year_end = str(instance.date_miss_end.year)
+        data_end = str('%s/%s/%s') %(day_end, month_end, year_end)
+        motivo = str(instance.reason.name)
+        tasks.send_email.delay(data_end,data, motivo, id)
         # for objeto in lista:
         #     if objeto.solicitation == instance:
         #         pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %objeto.pk
@@ -69,8 +86,7 @@ def Autorizar(sender, instance, created, **kwargs):
             tasks.negar_email.delay(motivo, pk)
 
         elif instance.status == 2 :
-            print (str(instance.status))
-            pk = str(instance.solicitation.id)
+            pk = str(instance.id)
             day = str(instance.solicitation.date_miss_start.day)
             month = str(instance.solicitation.date_miss_start.month)
             year = str(instance.solicitation.date_miss_start.year)
@@ -83,7 +99,7 @@ def Autorizar(sender, instance, created, **kwargs):
             tasks.aceitar_email.delay(data_end,data, motivo, pk)
 
         elif instance.status == 3 :
-            pk = str(instance.solicitation.id)
+            pk = str(instance.id)
             day = str(instance.solicitation.date_miss_start.day)
             month = str(instance.solicitation.date_miss_start.month)
             year = str(instance.solicitation.date_miss_start.year)

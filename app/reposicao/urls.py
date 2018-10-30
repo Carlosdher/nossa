@@ -41,5 +41,9 @@ urlpatterns = [
 
      path('reposicao/professores', core.Lista.as_view(), name='professores'),
 
+     path('mensagem/<pk>/', core.Mensagem.as_view(), name='mensagem'),
+
+     path('reposicao/decisao/<pk>/', core.MensagemUp.as_view(), name='decisao'),
+
 
 ]

@@ -1,6 +1,12 @@
 {% extends '../base.html'%}
 
 {% block content %}
+      {% if erro %}
+      <div class="alert alert-danger alert-dismissible" id='alert'>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true" id="exit" onclick="alertoff()">X</button>
+                <h4><i class="icon fa fa-warning"></i> Desculpe!</h4>Não encontramos nenhum Usuário ou solicitação com os dados requeridos
+              </div>
+      {% endif %}
 <section class="content-header" style="margin-bottom: 30px;">
     <h1>
       Usuários
@@ -133,4 +139,12 @@
       </div>
 
 </section>
+<script>
+  alert = document.getElementById('alert');
+  exit = document.getElementById('exit');
+  function alertoff() {
+    // body...
+    alert.style.display = 'none';
+  }
+</script>
 {% endblock %}

@@ -74,3 +74,16 @@ class Planejamento(CreateUpdateModel):
     class Meta:
         verbose_name='Planejamento'
         verbose_name_plural = 'Planejamentos'
+
+class Troca(CreateUpdateModel):
+    STATUS = (
+    (0, 'Negada'),
+    (1, 'Andamento'),
+    (2, 'Aceita'))
+    solicitado = models.ForeignKey(UUIDUser,on_delete=models.CASCADE,related_name='trocas',verbose_name='solicitado')
+    solicitante = models.ForeignKey(UUIDUser,on_delete=models.CASCADE, related_name='trocadeaula', verbose_name='solicitante')
+    mensagem = models.TextField(verbose_name='mensagem')
+    status = models.IntegerField(choices=STATUS, default=1)
+
+    def __str__(self):
+        return self.mensagem

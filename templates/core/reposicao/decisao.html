@@ -1,0 +1,20 @@
+{% extends '../base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<form method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="status" id="status" value="2">
+  <button type="submit" class="btn btn-success">Aceitar</button>
+</form>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="status" id="status" value="0">
+    <button type="submit" class="btn btn-success">Negar</button>
+</form>
+{% else %}
+  <p> Para aceitar ou negar o pedido de troca de aula, será necessário está logado no sistema </p>
+
+{% endif %}
+{% endblock %}

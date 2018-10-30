@@ -5,9 +5,7 @@ from django.views.generic import View
 from django.contrib import admin
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
-
-
-
+from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -71,6 +69,24 @@ class Adiantamento(CreateView):
          obj.save()
          return super(Adiantamento, self).form_valid(form)
 
+class Mensagem(DetailView):
+    model = models.UUIDUser
+    template_name = 'core/reposicao/mensagem.html'
+
+    def post(self, request, *args, **kwargs):
+        profsolicitado = models.UUIDUser.objects.get(username=self.request.POST['solicitado'])
+        a =  models.Troca.objects.create(solicitado=profsolicitado, solicitante=self.request.user,  mensagem=self.request.POST['mensagem'])
+        a.save()
+        return HttpResponseRedirect('/reposicao/historico/')
+
+class MensagemUp(UpdateView):
+    model = models.Troca
+    template_name = 'core/reposicao/decisao.html'
+    success_url = reverse_lazy('reposicao:historico')
+    fields = ['status']
+
+    def get_queryset(self):
+        return models.Troca.objects.all()
 
 
 #class AceitarCreateView(UpdateView):
@@ -109,7 +125,7 @@ class Aceitar(UpdateView):
     def get_context_data(self, **kwargs):
         kwargs['solicitacao'] = models.Solicitacao.objects.all()
         return super(Aceitar, self).get_context_data(**kwargs)
-    
+
     def get_queryset(self):
         # if 'aceita' in self.request.POST:
         #     autorizacao = models.Autorizacao.objects.get(id = self.request.POST['objeto'])
@@ -120,7 +136,7 @@ class Aceitar(UpdateView):
         # if 'Negar' in self.request.POST:
         #     autorizacao = models.Autorizacao.objects.get(id = self.request.POST['objeto'])
         #     models.Autorizacao.objects.filter(id = self.request.POST['objeto']).update(status=0, justification_Aceit=self.request.POST['justificativa'])
-        
+
         return models.Autorizacao.objects.all()
 
 class Historico(ListView):
@@ -174,7 +190,7 @@ class Historico(ListView):
         if self.request.user.is_staff:
             return models.Autorizacao.objects.all()
         else:
-            print ('não')
+
             return models.Autorizacao.objects.filter(solicitation__usuario__first_name=self.request.user.first_name)
 
 

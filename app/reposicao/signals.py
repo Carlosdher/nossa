@@ -1,5 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.db.models.signals import pre_save
 from django.test.signals import template_rendered
 from django.core.mail import EmailMessage
 from django.core import mail
@@ -81,6 +82,19 @@ def Autorizar(sender, instance, created, **kwargs):
             motivo = str(instance.solicitation.reason.name)
             tasks.aceitar_email.delay(data_end,data, motivo, pk)
 
+        elif instance.status == 3 :
+            pk = str(instance.solicitation.id)
+            day = str(instance.solicitation.date_miss_start.day)
+            month = str(instance.solicitation.date_miss_start.month)
+            year = str(instance.solicitation.date_miss_start.year)
+            data = str('%s/%s/%s') %(day, month, year)
+            day_end = str(instance.solicitation.date_miss_end.day)
+            month_end = str(instance.solicitation.date_miss_end.month)
+            year_end = str(instance.solicitation.date_miss_end.year)
+            data_end = str('%s/%s/%s') %(day_end, month_end, year_end)
+            motivo = str(instance.solicitation.reason.name)
+            tasks.aceitaremaildenovo.delay(data_end,data, motivo, pk)
+
         # elif (instance.status < 4):
         #     pk = str('127.0.0.1:8000/reposicao/aceitar/%s') %(instance.pk)
         #     email = mail.EmailMessage(
@@ -95,3 +109,25 @@ def Autorizar(sender, instance, created, **kwargs):
 
 
 post_save.connect(Autorizar, sender=models.Autorizacao)
+
+def Troca(sender, instance, created, **kwargs):
+    if created:
+        id = str(instance.pk)
+        solicitado = str(instance.solicitado.email)
+        solicitante = str(instance.solicitante.email)
+        mensagem = str(instance.mensagem)
+        tasks.mensagem.delay(id, solicitado, solicitante, mensagem)
+
+    elif instance.status == 0:
+        solicitado = str(instance.solicitado.email)
+        firstname = str(instance.solicitado.first_name)
+        solicitante = str(instance.solicitante.email)
+        tasks.negar_mensagem.delay(solicitado, solicitante, firstname)
+
+    elif instance.status == 2:
+        solicitado = str(instance.solicitado.email)
+        firstname = str(instance.solicitado.first_name)
+        solicitante = str(instance.solicitante.email)
+        tasks.aceitarmensagem.delay(solicitado, solicitante, firstname)
+
+post_save.connect(Troca, sender=models.Troca)

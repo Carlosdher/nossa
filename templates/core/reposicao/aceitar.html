@@ -1,9 +1,0 @@
-{% extends '../base.html' %}
-
-{% block content %}
-        <form method="POST">
-          {% csrf_token %}
-          <input type="hidden" id="status" name="status" value="2">
-          <input type="submit" value="Enviar">
-        </form>
-{% endblock %}

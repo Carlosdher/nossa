@@ -1,20 +1,43 @@
 {% extends '../base.html' %}
 
 {% block content %}
-{% if user.is_authenticated %}
+<section class="content-header" >
+  <h1>Requerimento de Troca de Aula <small>Formulário para  Aceitar pedido de troca de aula {{ object.solicitation.usuario.username }} </small></h1>
+
+  <ol class="breadcrumb">
+        <li><a href="{% url 'core:dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{% url 'reposicao:professores' %}"> Troca de aula</a></li>
+        <li class="active">Aceitar Troca</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="box">
+<div class="box box-warning"  >
+  {% if user.is_authenticated %}
+    <div>
+      <p>{{object.solicitante}}</p>
+      <p>{{object.solicitado}}</p>
+      <p>{{object.mensagem}}</p>
+    </div>
+<div style="display: inline;">
 <form method="POST">
   {% csrf_token %}
   <input type="hidden" name="status" id="status" value="2">
-  <button type="submit" class="btn btn-success">Aceitar</button>
+  <button type="submit" class="btn btn-success" style="float:left;" >Aceitar</button>
 </form>
 
 <form method="POST">
     {% csrf_token %}
     <input type="hidden" name="status" id="status" value="0">
-    <button type="submit" class="btn btn-success">Negar</button>
+    <button type="submit" class="btn btn-danger" style="margin-bottom:20px;" >Negar</button>
 </form>
+</div>
 {% else %}
   <p> Para aceitar ou negar o pedido de troca de aula, será necessário está logado no sistema </p>
 
 {% endif %}
+</div>
+</div>
+</section>
 {% endblock %}

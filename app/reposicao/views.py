@@ -100,8 +100,7 @@ class MensagemUp(UpdateView):
     success_url = reverse_lazy('reposicao:historico')
     fields = ['status']
 
-    def get_queryset(self):
-        return models.Troca.objects.all()
+
 
 
 #class AceitarCreateView(UpdateView):
@@ -168,6 +167,7 @@ class Historico(ListView):
                     if self.request.GET['data_inicio'] :
                         if self.request.GET['data_fim'] :
                             kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'], date_miss_end=self.request.GET['data_fim'] )
+                            print(self.request.GET['data_fim'])
                         else:
                             kwargs['solicitacao'] = models.Solicitacao.objects.filter(usuario__registration=self.request.GET['name'], date_miss_start = self.request.GET['data_inicio'])
                     else:
@@ -196,6 +196,10 @@ class Historico(ListView):
             else:
                 kwargs['erro'] = True
                 kwargs['solicitacao'] = models.Solicitacao.objects.all()
+            if len(kwargs['solicitacao']) == 0:
+                kwargs['solicitacao'] = models.Solicitacao.objects.all()
+                kwargs['erro'] = True
+
         else:
             kwargs['solicitacao'] = models.Solicitacao.objects.all()
 
@@ -215,7 +219,7 @@ class ImprimirPlanejamento(View):
 
 
     def get(self, request, *args, **kwargs):
-        dados = models.Planejamento.objects.all()
+        dados = self.request.content_params
         pdf = render_pdf("core/reposicao/imprimirplanejamento.html", {"dados": dados})
         return HttpResponse(pdf, content_type="application/pdf")
     def get_queryset (self):

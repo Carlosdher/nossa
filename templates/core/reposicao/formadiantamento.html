@@ -9,9 +9,8 @@
         <li class="active">Adiantamento</li>
   </ol>
 </section>
-<div class="box box-success" >
-
-<div class="box box-default"  >
+<section class="content">
+<div class="box box-default" >
 
 
 <form method="post">
@@ -23,17 +22,16 @@
     <div class="col-md-200">
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">{{ field.label }}</label>
+       <label class="col-sm-2 control-label">{{ field.label }}</label>
       <div class="col-md-6">
           {% if field.label == 'Data da Falta Inicial' %}
-              <input type="date" class="form-control" id="date_miss_start" name="date_miss_start" style="width: 30%; float: left;" >
+            <input type="date" class="form-control" id="date_miss_start" name="date_miss_start" style="width: 30%; float: left;" >
           {% elif field.label == 'Data da Falta Final' %}
-              <input type="date" class="form-control" id="date_miss_end" name="date_miss_end" style="width: 30%;  float: left; position: relative; top:0; margin:0;" >
+            <input type="date" class="form-control" id="date_miss_end" name="date_miss_end" style="width: 30%;  float: left; position: relative; top:0; margin:0;" >
         {% else %}
-        {{ field|add_class:'form-control ' }}
-
+          {{ field|add_class:'form-control' }}
         {% for error in field.errors %}
-          <span class="help-block">{{ error }}</span>
+            <span class="help-block">{{ error }}</span>
         {% endfor %}
         {% endif %}
       </div>
@@ -41,11 +39,13 @@
     </div>
   </div>
   {% endfor %}
+</div>
+  <div class="box-footer" style="width: 65%">
+    <a href="{% url 'core:dashboard' %}" class="btn btn-danger">Close</a>
+    <input type="submit" class="btn btn-primary pull-right"  name="sender" id="sender" value="Enviar" />
+      </div>
     <input type="hidden" name="usuario" id="usuario" value="{{ resquest.user }}">
-    <a href="{% url 'reposicao:reposicao' %}" class="btn btn-danger">Close</a>
-    <input type="submit" class="btn btn-primary"  value="Save" />
 </form>
 </div>
-</div>
-</div>
+</section>
 {% endblock %}

@@ -9,8 +9,7 @@
         <li class="active">Reposição de Aula</li>
   </ol>
 </section>
-<div class="box box-success" >
-
+<section class="content">
 <div class="box box-default"  >
 
 
@@ -40,11 +39,13 @@
     </div>
   </div>
   {% endfor %}
-    <input type="hidden" name="usuario" id="usuario" value="{{ resquest.user }}">
+</div>
+  <div class="box-footer" style="width: 65%">
     <a href="{% url 'core:dashboard' %}" class="btn btn-danger">Close</a>
-    <input type="submit" class="btn btn-primary"  name="sender" id="sender" value="Save" />
+    <input type="submit" class="btn btn-primary pull-right"  name="sender" id="sender" value="Enviar" />
+      </div>
+    <input type="hidden" name="usuario" id="usuario" value="{{ resquest.user }}">
 </form>
 </div>
-</div>
-</div>
+</section>
 {% endblock %}

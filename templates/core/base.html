@@ -19,8 +19,6 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
-  <!-- Ctrl_p style -->
-  <link rel="stylesheet" href="{% static 'dist/my-css/impressao.css' %}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,11 +36,11 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="/dashboard" class="logo">
+    <a href="../../index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>H</b>ub</span>
+      <span class="logo-mini"><b>HUB</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>H</b>ub</span>
+      <span class="logo-lg">HUB<b>IFPB</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -55,10 +53,13 @@
       </a>
 
       <div class="navbar-custom-menu">
-
         <ul class="nav navbar-nav">
           <!-- Notifications: style can be found in dropdown.less -->
           <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">10</span>
+            </a>
             <ul class="dropdown-menu">
               <li class="header">You have 10 notifications</li>
               <li>
@@ -76,12 +77,10 @@
           </li>
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
-
-            <a href="{% url 'reposicao:perfil' %}" class="dropdown-toggle" data-toggle="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="user-image" alt="User Image">
               <span class="hidden-xs">{{ request.user.username }}</span>
             </a>
-
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
@@ -119,7 +118,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">ADMIN</li>
         <li class="treeview">
-          <a href="{% url 'reposicao:aa' %}">
+          <a href="#">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
@@ -131,21 +130,23 @@
           </a>
         </li>
         {% endif %}
-          <li class="treeview active">
-            <a href="{% url 'reposicao:reposicao' %}">
+        {% if user.is_authenticated %}
+        <li class="treeview deactive">
+          <a href="#">
             <i class="fa fa-calendar-times-o "></i> <span>Sistema de Reposição</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-            <ul class="treeview-menu">
-              <li><a href="{% url 'reposicao:formrep' %}"><i class="fa fa-circle-o"></i> Reposição de Aula</a></li>
-              <li><a href="{% url 'reposicao:formadianta' %}"><i class="fa fa-circle-o"></i> Adiantamento de Aula</a></li>
-              <li><a href="{% url 'reposicao:professores' %}"><i class="fa fa-circle-o"></i> Troca de Aula</a></li>
-              <li><a href="{% url 'reposicao:historico' %}"><i class="fa fa-circle-o"></i> Historico</a></li>
-              <li><a href="{% url 'core:logout' %} "><i class="fa fa-circle-o"></i>Sair</a></li>
+          <ul class="treeview-menu">
+            <li><a href="{% url 'reposicao:formrep' %}"><i class="fa fa-calendar-check-o "></i> Reposição de Aula</a></li>
+            <li><a href="{% url 'reposicao:formadianta' %}"><i class="fa fa-calendar-check-o "></i> Adiantamento de Aula</a></li>
+            <li><a href="{% url 'reposicao:professores' %}"><i class="fa fa-calendar-check-o "></i>Troca de Aula</a></li> <!-- <i class="fa  fa-refresh"><i class="fa fa-user" style="font-size:10px; position: relative; top:3px;" ><br/><i class="fa fa-user" ></i></i></i> Troca de Aula</a></li> -->
+            <li><a href="{% url 'reposicao:historico' %}"><i class="fa  fa-list-alt "></i> Historico</a></li>
           </ul>
+        </ul>
       </ul>
+      {% endif %}
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -163,7 +164,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 0.0.1
     </div>
-    <strong>Copyright &copy; 2018 - IFPB - Garag3m - Template:<a href="https://adminlte.io"> Almsaeed Studio</a></strong>
+    <strong>Copyright &copy; 2018 - IFPB - Garag3m - Template:<a href="https://adminlte.io">Almsaeed Studio</a></strong>
   </footer>
 
   <!-- Add the sidebar's background. This div must be placed
@@ -173,6 +174,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
+<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
 <!-- SlimScroll -->
@@ -187,26 +189,6 @@
   $(document).ready(function () {
     $('.sidebar-menu').tree()
   })
-
-  valor = document.getElementsByClassName('java')
-
-  rasao = document.getElementsByClassName('java').value
-  outro = document.getElementsById('outro')
-
-  valor.onkeypress = function(e) {
-      // 13 é a tecla <ENTER>. Se ela for pressionada, mostrar o valor
-      if (e.keyCode == 13) {
-          Outros();
-          e.preventDefault();
-      }
-  }
-
-
-function Outros () {
-  if (rasao == 'Outros'){
-    outro.style.display = 'block'
-  }
-}
 </script>
 </body>
 </html>

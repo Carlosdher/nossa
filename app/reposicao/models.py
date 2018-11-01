@@ -33,9 +33,9 @@ class Solicitacao(CreateUpdateModel):
     justification = models.TextField(verbose_name='Justificativa')
     date_miss_start = models.DateField(verbose_name='Data da Falta Inicial')
     date_miss_end = models.DateField(verbose_name='Data da Falta Final')
-    reason = models.ForeignKey(Motivo, on_delete = models.CASCADE)
+    reason = models.ForeignKey(Motivo, on_delete = models.CASCADE, verbose_name='motivo')
     othes = models.CharField(max_length=200, null=True, blank=True, verbose_name='Outros' )
-    team = models.ForeignKey(Turma, on_delete = models.CASCADE)
+    team = models.ForeignKey(Turma, on_delete = models.CASCADE, verbose_name='turma')
 
 
     def __str__(self):

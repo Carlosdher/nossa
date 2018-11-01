@@ -23,7 +23,7 @@ class Home(TemplateView):
 
 class Lista(ListView):
     model = models.UUIDUser
-    template_name = 'core/reposicao/tabela.html'
+    template_name = 'core/reposicao/listas/tabela.html'
 
     def get_queryset(self):
         if 'search' in self.request.GET:
@@ -46,7 +46,7 @@ class PerfilUpdate(UpdateView):
 
 class Reposicao(CreateView):
     model = models.Solicitacao
-    template_name = 'core/reposicao/formreposicao.html'
+    template_name = 'core/reposicao/forms/formreposicao.html'
     success_url = reverse_lazy('reposicao:historico')
     fields = ['date_miss_start','date_miss_end', 'justification', 'reason','othes','team']
 
@@ -59,7 +59,7 @@ class Reposicao(CreateView):
 
 class Adiantamento(CreateView):
     model = models.Solicitacao
-    template_name = 'core/reposicao/formadiantamento.html'
+    template_name = 'core/reposicao/forms/formadiantamento.html'
     success_url = reverse_lazy('reposicao:reposicao')
     fields = ['date_miss_start','date_miss_end', 'justification', 'reason','othes','team']
 
@@ -71,7 +71,7 @@ class Adiantamento(CreateView):
 
 class Mensagem(DetailView):
     model = models.UUIDUser
-    template_name = 'core/reposicao/mensagem.html'
+    template_name = 'core/reposicao/forms/mensagem.html'
 
     def post(self, request, *args, **kwargs):
         profsolicitado = models.UUIDUser.objects.get(username=self.request.POST['solicitado'])
@@ -81,7 +81,7 @@ class Mensagem(DetailView):
 
 class Planejamento(DetailView):
     model = models.Autorizacao
-    template_name = 'core/reposicao/planejamento.html'
+    template_name = 'core/reposicao/forms/planejamento.html'
     def post(self, request, *args, **kwargs):
         solicitacao = models.Solicitacao.objects.get(id=self.request.POST['solicitation'])
         a =  models.Planejamento.objects.create(solicitation=solicitacao, components=self.request.POST['components'], date_class=self.request.POST['date_class'], date_restitution=self.request.POST['date_restitution'], descripition=self.request.POST['descripition'])
@@ -90,13 +90,13 @@ class Planejamento(DetailView):
 
 class Solicitacaoedit(UpdateView):
     model = models.Solicitacao
-    template_name = 'core/reposicao/solicitacaoedit.html'
+    template_name = 'core/reposicao/forms/solicitacaoedit.html'
     success_url = reverse_lazy('reposicao:historico')
     fields = ['date_miss_start','date_miss_end', 'justification', 'reason','othes','team']
 
 class MensagemUp(UpdateView):
     model = models.Troca
-    template_name = 'core/reposicao/decisao.html'
+    template_name = 'core/reposicao/aceitar/decisao.html'
     success_url = reverse_lazy('reposicao:historico')
     fields = ['status']
 
@@ -132,7 +132,7 @@ class MensagemUp(UpdateView):
 
 class Aceitar(UpdateView):
     model = models.Autorizacao
-    template_name = 'core/reposicao/acite.html'
+    template_name = 'core/reposicao/aceitar/acite.html'
     success_url = reverse_lazy('reposicao:historico')
     fields = ['status','justification_Aceit']
 
@@ -155,7 +155,7 @@ class Aceitar(UpdateView):
 
 class Historico(ListView):
     model = models.Autorizacao
-    template_name = 'core/reposicao/historico.html'
+    template_name = 'core/reposicao/listas/historico.html'
 
 
     def get_context_data(self, **kwargs):
@@ -215,12 +215,12 @@ class Historico(ListView):
 
 class ImprimirPlanejamento(View):
     model = models.Planejamento
-    template_name = 'core/reposicao/imprimirplanejamento.html'
+    template_name = 'core/reposicao/pdf/planejamento_pdf.html'
 
 
     def get(self, request, *args, **kwargs):
         dados = self.request.content_params
-        pdf = render_pdf("core/reposicao/imprimirplanejamento.html", {"dados": dados})
+        pdf = render_pdf("core/reposicao/pdf/planejamento_pdf.html", {"dados": dados})
         return HttpResponse(pdf, content_type="application/pdf")
     def get_queryset (self):
         return models.Planejamento.objects.all()
@@ -228,7 +228,7 @@ class ImprimirPlanejamento(View):
 class Teste(View):
     def get(self, request, *args, **kwargs):
         dados = models.Solicitacao.objects.all()
-        pdf = render_pdf("core/reposicao/as.html", {"dados": dados})
+        pdf = render_pdf("core/reposicao/pdf/historico_pdf.html", {"dados": dados})
         return HttpResponse(pdf, content_type="application/pdf")
 
 
